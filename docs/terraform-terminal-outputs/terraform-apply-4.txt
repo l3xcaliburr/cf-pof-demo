@@ -1,0 +1,149 @@
+random_string.bucket_suffix: Refreshing state... [id=9uh2uvca]
+module.management_server.data.aws_ec2_instance_type.this: Reading...
+data.aws_ami.amazon_linux: Reading...
+module.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Reading...
+module.vpc.data.aws_region.current: Reading...
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Reading...
+module.vpc.module.vpc_endpoints.data.aws_region.current: Reading...
+module.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Reading...
+module.vpc.aws_eip.nat[0]: Refreshing state... [id=eipalloc-0688f58e9826c3d47]
+module.vpc.aws_vpc.this: Refreshing state... [id=vpc-016b0524ea218c8d7]
+module.vpc.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Read complete after 0s [id=1021377347]
+module.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Read complete after 0s [id=2053943846]
+module.vpc.module.vpc_endpoints.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.aws_iam_policy.flowlogs_policy[0]: Refreshing state... [id=arn:aws:iam::867344447298:policy/poc-vpc-flowlogs-cloudwatch-policy]
+module.vpc.aws_iam_role.flowlogs_role[0]: Refreshing state... [id=poc-vpc-flowlogs-cloudwatch-role]
+module.management_server.data.aws_ec2_instance_type.this: Read complete after 0s [id=t2.micro]
+data.aws_ami.amazon_linux: Read complete after 0s [id=ami-0c6ebb5b9bce4ba15]
+module.vpc.aws_iam_role_policy_attachment.flowlogs_policy[0]: Refreshing state... [id=poc-vpc-flowlogs-cloudwatch-role-20250712023804611800000001]
+module.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-0ccff6168fe93561b]
+module.vpc.aws_route_table.public[1]: Refreshing state... [id=rtb-075c3778ac6d74e7e]
+module.vpc.aws_default_security_group.default: Refreshing state... [id=sg-053dfdbef29e1eca8]
+module.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-01fdc407f6d1a3d25]
+module.vpc.aws_cloudwatch_log_group.this[0]: Refreshing state... [id=/aws/vpcflow/vpc-016b0524ea218c8d7]
+module.management_sg.aws_security_group.this: Refreshing state... [id=sg-09a732777f15cc6b0]
+module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-07f6b42fd24ff5004]
+module.vpc.aws_subnet.private[2]: Refreshing state... [id=subnet-0ce4b3ea489eb67b3]
+module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0cd880cd8991c7784]
+module.vpc.aws_subnet.private[3]: Refreshing state... [id=subnet-096fa1fc46bada279]
+aws_security_group.alb_sg: Refreshing state... [id=sg-01f598e12e82a617e]
+module.vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-07c2bda2f5cbf9d67]
+module.app_sg.aws_security_group.this: Refreshing state... [id=sg-0f078c0bb015467b5]
+module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-09d389b210e3aa1e2]
+module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-04f5541257dd15e83]
+aws_lb_target_group.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:targetgroup/app-servers-tg/535ed8a38ce5a9e0]
+module.management_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-02f56080bc9d2af0e]
+module.management_sg.aws_vpc_security_group_ingress_rule.this["ssh"]: Refreshing state... [id=sgr-01fcec6d167a1e328]
+module.vpc.aws_route.public_internet_gateway[1]: Refreshing state... [id=r-rtb-075c3778ac6d74e7e1080289494]
+module.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-01fdc407f6d1a3d251080289494]
+module.vpc.aws_route_table_association.private[3]: Refreshing state... [id=rtbassoc-05d253fbd7da4f185]
+module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0bf9d3a5680477e84]
+module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0f5b962b6f750ecb7]
+module.vpc.aws_route_table_association.private[2]: Refreshing state... [id=rtbassoc-05e50c8ba272ee1f3]
+module.vpc.aws_flow_log.this[0]: Refreshing state... [id=fl-0eea3c091180bd834]
+module.app_sg.aws_vpc_security_group_ingress_rule.this["http_from_alb"]: Refreshing state... [id=sgr-04e53e551cc2f2ec9]
+module.app_sg.aws_vpc_security_group_ingress_rule.this["ssh_from_mgmt"]: Refreshing state... [id=sgr-060113385796f527f]
+module.app_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-03c888571d344e019]
+aws_launch_template.app: Refreshing state... [id=lt-03f70e92007b80929]
+module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-049f6ad4070981055]
+module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0ee73e98fb10022ff]
+module.vpc.aws_nat_gateway.this[0]: Refreshing state... [id=nat-06c127d210dda9383]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/4b19a156c5885806]
+module.management_server.aws_instance.this[0]: Refreshing state... [id=i-0675df31bd894c05c]
+module.management_server.aws_instance.this[1]: Refreshing state... [id=i-051ee721d3333b809]
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Read complete after 1s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
+aws_autoscaling_group.app: Refreshing state... [id=app-servers-asg]
+aws_lb_listener.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:listener/app/poc-alb/4b19a156c5885806/f380763199196f99]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.vpc.aws_nat_gateway.this[0] will be created
+  + resource "aws_nat_gateway" "this" {
+      + allocation_id                      = "eipalloc-0688f58e9826c3d47"
+      + association_id                     = (known after apply)
+      + connectivity_type                  = "public"
+      + id                                 = (known after apply)
+      + network_interface_id               = (known after apply)
+      + private_ip                         = (known after apply)
+      + public_ip                          = (known after apply)
+      + secondary_private_ip_address_count = (known after apply)
+      + secondary_private_ip_addresses     = (known after apply)
+      + subnet_id                          = "subnet-04f5541257dd15e83"
+      + tags                               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+    }
+
+  # module.vpc.aws_route.private_nat_gateway[0] will be created
+  + resource "aws_route" "private_nat_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + nat_gateway_id         = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = "rtb-07c2bda2f5cbf9d67"
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+module.vpc.aws_nat_gateway.this[0]: Creating...
+module.vpc.aws_nat_gateway.this[0]: Still creating... [00m10s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [00m20s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [00m30s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [00m40s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [00m50s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [01m00s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [01m10s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [01m20s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [01m30s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Creation complete after 1m34s [id=nat-0e6ef7e0acebf4ed9]
+module.vpc.aws_route.private_nat_gateway[0]: Creating...
+module.vpc.aws_route.private_nat_gateway[0]: Creation complete after 1s [id=r-rtb-07c2bda2f5cbf9d671080289494]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+alb_sg_id = "sg-01f598e12e82a617e"
+alb_subnet_id = "subnet-09d389b210e3aa1e2"
+app_sg_id = "sg-0f078c0bb015467b5"
+asg_name = "app-servers-asg"
+load_balancer_dns = "poc-alb-1303871507.us-east-1.elb.amazonaws.com"
+load_balancer_url = "http://poc-alb-1303871507.us-east-1.elb.amazonaws.com"
+management_server_ip = "i-0675df31bd894c05c"
+management_server_private_ip = "10.1.1.113"
+management_sg_id = "sg-09a732777f15cc6b0"
+management_subnet_id = "subnet-04f5541257dd15e83"
+private_subnet_ids = {
+  "poc-vpc-app-subnet-us-east-1a" = "subnet-07f6b42fd24ff5004"
+  "poc-vpc-app-subnet-us-east-1b" = "subnet-0cd880cd8991c7784"
+  "poc-vpc-backend-subnet-us-east-1a" = "subnet-0ce4b3ea489eb67b3"
+  "poc-vpc-backend-subnet-us-east-1b" = "subnet-096fa1fc46bada279"
+}
+public_subnet_ids = {
+  "poc-vpc-management-subnet-us-east-1a" = "subnet-04f5541257dd15e83"
+  "poc-vpc-management-subnet-us-east-1b" = "subnet-09d389b210e3aa1e2"
+}
+vpc_id = "vpc-016b0524ea218c8d7"

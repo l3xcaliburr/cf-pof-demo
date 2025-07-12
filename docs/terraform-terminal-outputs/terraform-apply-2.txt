@@ -1,0 +1,522 @@
+# Fixed and issue when I realized that the CF VPC module creates an S3 bucket for the flowlogs. Used CW instead.
+
+module.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Reading...
+module.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Reading...
+module.vpc.module.vpc_endpoints.data.aws_region.current: Reading...
+data.aws_ami.amazon_linux: Reading...
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Reading...
+module.vpc.data.aws_region.current: Reading...
+module.management_server.data.aws_ec2_instance_type.this: Reading...
+module.vpc.aws_vpc.this: Refreshing state... [id=vpc-016b0524ea218c8d7]
+module.vpc.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Read complete after 0s [id=2053943846]
+module.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Read complete after 0s [id=1021377347]
+module.vpc.module.vpc_endpoints.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.aws_s3_bucket.flowlogs[0]: Refreshing state... [id=poc-vpc-brooks-flowlogs]
+module.vpc.aws_s3_bucket_public_access_block.flowlogs[0]: Refreshing state... [id=poc-vpc-brooks-flowlogs]
+module.vpc.aws_s3_bucket_server_side_encryption_configuration.flowlogs-encryption[0]: Refreshing state... [id=poc-vpc-brooks-flowlogs]
+module.vpc.aws_s3_bucket_policy.flowlogs_bucket_policy[0]: Refreshing state... [id=poc-vpc-brooks-flowlogs]
+module.management_server.data.aws_ec2_instance_type.this: Read complete after 0s [id=t2.micro]
+data.aws_ami.amazon_linux: Read complete after 0s [id=ami-0c6ebb5b9bce4ba15]
+module.vpc.aws_default_security_group.default: Refreshing state... [id=sg-053dfdbef29e1eca8]
+module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-04f5541257dd15e83]
+aws_security_group.alb_sg: Refreshing state... [id=sg-01f598e12e82a617e]
+module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-09d389b210e3aa1e2]
+aws_lb_target_group.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:targetgroup/app-servers-tg/535ed8a38ce5a9e0]
+module.app_sg.aws_security_group.this: Refreshing state... [id=sg-0f078c0bb015467b5]
+module.management_sg.aws_security_group.this: Refreshing state... [id=sg-09a732777f15cc6b0]
+module.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-0ccff6168fe93561b]
+module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0cd880cd8991c7784]
+module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-07f6b42fd24ff5004]
+module.vpc.aws_subnet.private[3]: Refreshing state... [id=subnet-096fa1fc46bada279]
+module.vpc.aws_subnet.private[2]: Refreshing state... [id=subnet-0ce4b3ea489eb67b3]
+module.vpc.aws_flow_log.s3[0]: Refreshing state... [id=fl-0af81d16766bb880d]
+module.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-01fdc407f6d1a3d25]
+module.vpc.aws_route_table.public[1]: Refreshing state... [id=rtb-075c3778ac6d74e7e]
+module.vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-07c2bda2f5cbf9d67]
+module.app_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-03c888571d344e019]
+module.management_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-02f56080bc9d2af0e]
+module.management_sg.aws_vpc_security_group_ingress_rule.this["ssh"]: Refreshing state... [id=sgr-01fcec6d167a1e328]
+aws_launch_template.app: Refreshing state... [id=lt-03f70e92007b80929]
+module.app_sg.aws_vpc_security_group_ingress_rule.this["ssh_from_mgmt"]: Refreshing state... [id=sgr-060113385796f527f]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/4b19a156c5885806]
+module.app_sg.aws_vpc_security_group_ingress_rule.this["http_from_alb"]: Refreshing state... [id=sgr-04e53e551cc2f2ec9]
+module.management_server.aws_instance.this[1]: Refreshing state... [id=i-051ee721d3333b809]
+module.management_server.aws_instance.this[0]: Refreshing state... [id=i-0675df31bd894c05c]
+module.vpc.aws_route.public_internet_gateway[1]: Refreshing state... [id=r-rtb-075c3778ac6d74e7e1080289494]
+module.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-01fdc407f6d1a3d251080289494]
+module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-049f6ad4070981055]
+module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0ee73e98fb10022ff]
+module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0f5b962b6f750ecb7]
+module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0bf9d3a5680477e84]
+module.vpc.aws_route_table_association.private[2]: Refreshing state... [id=rtbassoc-05e50c8ba272ee1f3]
+module.vpc.aws_route_table_association.private[3]: Refreshing state... [id=rtbassoc-05d253fbd7da4f185]
+aws_autoscaling_group.app: Refreshing state... [id=app-servers-asg]
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Read complete after 2s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
+aws_lb_listener.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:listener/app/poc-alb/4b19a156c5885806/f380763199196f99]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # module.vpc.aws_s3_bucket.flowlogs[0] has been deleted
+  - resource "aws_s3_bucket" "flowlogs" {
+      - arn                         = "arn:aws:s3:::poc-vpc-brooks-flowlogs" -> null
+        id                          = "poc-vpc-brooks-flowlogs"
+        tags                        = {}
+        # (12 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+  - destroy
+
+Terraform will perform the following actions:
+
+  # random_string.bucket_suffix will be created
+  + resource "random_string" "bucket_suffix" {
+      + id          = (known after apply)
+      + length      = 8
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # module.vpc.aws_cloudwatch_log_group.this[0] will be created
+  + resource "aws_cloudwatch_log_group" "this" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + log_group_class   = (known after apply)
+      + name              = "/aws/vpcflow/vpc-016b0524ea218c8d7"
+      + name_prefix       = (known after apply)
+      + retention_in_days = 365
+      + skip_destroy      = false
+      + tags              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all          = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.vpc.aws_flow_log.s3[0] will be destroyed
+  # (because index [0] is out of range for count)
+  - resource "aws_flow_log" "s3" {
+      - arn                        = "arn:aws:ec2:us-east-1:867344447298:vpc-flow-log/fl-0af81d16766bb880d" -> null
+      - id                         = "fl-0af81d16766bb880d" -> null
+      - log_destination            = "arn:aws:s3:::poc-vpc-brooks-flowlogs" -> null
+      - log_destination_type       = "s3" -> null
+      - log_format                 = "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}" -> null
+      - max_aggregation_interval   = 600 -> null
+      - tags                       = {} -> null
+      - tags_all                   = {
+          - "Environment" = "poc"
+          - "ManagedBy"   = "terraform"
+          - "Owner"       = "alex-brooks"
+          - "Project"     = "web-server-poc"
+        } -> null
+      - traffic_type               = "ALL" -> null
+      - vpc_id                     = "vpc-016b0524ea218c8d7" -> null
+        # (3 unchanged attributes hidden)
+
+      - destination_options {
+          - file_format                = "plain-text" -> null
+          - hive_compatible_partitions = false -> null
+          - per_hour_partition         = false -> null
+        }
+    }
+
+  # module.vpc.aws_flow_log.this[0] will be created
+  + resource "aws_flow_log" "this" {
+      + arn                      = (known after apply)
+      + iam_role_arn             = (known after apply)
+      + id                       = (known after apply)
+      + log_destination          = (known after apply)
+      + log_destination_type     = "cloud-watch-logs"
+      + log_format               = (known after apply)
+      + log_group_name           = (known after apply)
+      + max_aggregation_interval = 600
+      + tags_all                 = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + traffic_type             = "ALL"
+      + vpc_id                   = "vpc-016b0524ea218c8d7"
+    }
+
+  # module.vpc.aws_iam_policy.flowlogs_policy[0] will be created
+  + resource "aws_iam_policy" "flowlogs_policy" {
+      + arn              = (known after apply)
+      + attachment_count = (known after apply)
+      + description      = "Policy to allow vpc flow logs to forward logs to Cloudwatch"
+      + id               = (known after apply)
+      + name             = "poc-vpc-flowlogs-cloudwatch-policy"
+      + name_prefix      = (known after apply)
+      + path             = "/"
+      + policy           = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "logs:PutLogEvents",
+                          + "logs:DescribeLogStreams",
+                          + "logs:DescribeLogGroups",
+                          + "logs:CreateLogStream",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                      + Sid      = "AWSVPCFlowLogsPushToCloudWatch"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id        = (known after apply)
+      + tags_all         = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+    }
+
+  # module.vpc.aws_iam_role.flowlogs_role[0] will be created
+  + resource "aws_iam_role" "flowlogs_role" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "vpc-flow-logs.amazonaws.com"
+                        }
+                      + Sid       = "AWSVPCFlowLogsAssumeRole"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "poc-vpc-flowlogs-cloudwatch-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.vpc.aws_iam_role_policy_attachment.flowlogs_policy[0] will be created
+  + resource "aws_iam_role_policy_attachment" "flowlogs_policy" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = "poc-vpc-flowlogs-cloudwatch-role"
+    }
+
+  # module.vpc.aws_internet_gateway.this[0] will be updated in-place
+  ~ resource "aws_internet_gateway" "this" {
+        id       = "igw-0ccff6168fe93561b"
+      ~ tags     = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks" -> "poc-vpc"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all = {
+          ~ "Name"        = "poc-vpc-brooks" -> "poc-vpc"
+            # (4 unchanged elements hidden)
+        }
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_route_table.private[0] will be updated in-place
+  ~ resource "aws_route_table" "private" {
+        id               = "rtb-07c2bda2f5cbf9d67"
+      ~ tags             = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-private" -> "poc-vpc-private"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all         = {
+          ~ "Name"        = "poc-vpc-brooks-private" -> "poc-vpc-private"
+            # (4 unchanged elements hidden)
+        }
+        # (5 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_route_table.public[0] will be updated in-place
+  ~ resource "aws_route_table" "public" {
+        id               = "rtb-01fdc407f6d1a3d25"
+      ~ tags             = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1a-rtb" -> "poc-vpc-public-us-east-1a-rtb"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all         = {
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1a-rtb" -> "poc-vpc-public-us-east-1a-rtb"
+            # (4 unchanged elements hidden)
+        }
+        # (5 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_route_table.public[1] will be updated in-place
+  ~ resource "aws_route_table" "public" {
+        id               = "rtb-075c3778ac6d74e7e"
+      ~ tags             = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1b-rtb" -> "poc-vpc-public-us-east-1b-rtb"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all         = {
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1b-rtb" -> "poc-vpc-public-us-east-1b-rtb"
+            # (4 unchanged elements hidden)
+        }
+        # (5 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_subnet.private[0] will be updated in-place
+  ~ resource "aws_subnet" "private" {
+        id                                             = "subnet-07f6b42fd24ff5004"
+      ~ tags                                           = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-app-backend-subnet-us-east-1a" -> "poc-vpc-app-backend-subnet-us-east-1a"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                                       = {
+          ~ "Name"        = "poc-vpc-brooks-app-backend-subnet-us-east-1a" -> "poc-vpc-app-backend-subnet-us-east-1a"
+            # (4 unchanged elements hidden)
+        }
+        # (19 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_subnet.private[1] will be updated in-place
+  ~ resource "aws_subnet" "private" {
+        id                                             = "subnet-0cd880cd8991c7784"
+      ~ tags                                           = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-application-backend-us-east-1b" -> "poc-vpc-application-backend-us-east-1b"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                                       = {
+          ~ "Name"        = "poc-vpc-brooks-application-backend-us-east-1b" -> "poc-vpc-application-backend-us-east-1b"
+            # (4 unchanged elements hidden)
+        }
+        # (19 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_subnet.private[2] will be updated in-place
+  ~ resource "aws_subnet" "private" {
+        id                                             = "subnet-0ce4b3ea489eb67b3"
+      ~ tags                                           = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-poc-us-east-1a" -> "poc-vpc-poc-us-east-1a"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                                       = {
+          ~ "Name"        = "poc-vpc-brooks-poc-us-east-1a" -> "poc-vpc-poc-us-east-1a"
+            # (4 unchanged elements hidden)
+        }
+        # (19 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_subnet.private[3] will be updated in-place
+  ~ resource "aws_subnet" "private" {
+        id                                             = "subnet-096fa1fc46bada279"
+      ~ tags                                           = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-app-server-poc-us-east-1b" -> "poc-vpc-app-server-poc-us-east-1b"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                                       = {
+          ~ "Name"        = "poc-vpc-brooks-app-server-poc-us-east-1b" -> "poc-vpc-app-server-poc-us-east-1b"
+            # (4 unchanged elements hidden)
+        }
+        # (19 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_subnet.public[0] will be updated in-place
+  ~ resource "aws_subnet" "public" {
+        id                                             = "subnet-04f5541257dd15e83"
+      ~ tags                                           = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1a" -> "poc-vpc-public-us-east-1a"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                                       = {
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1a" -> "poc-vpc-public-us-east-1a"
+            # (4 unchanged elements hidden)
+        }
+        # (19 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_subnet.public[1] will be updated in-place
+  ~ resource "aws_subnet" "public" {
+        id                                             = "subnet-09d389b210e3aa1e2"
+      ~ tags                                           = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1b" -> "poc-vpc-public-us-east-1b"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                                       = {
+          ~ "Name"        = "poc-vpc-brooks-public-us-east-1b" -> "poc-vpc-public-us-east-1b"
+            # (4 unchanged elements hidden)
+        }
+        # (19 unchanged attributes hidden)
+    }
+
+  # module.vpc.aws_vpc.this will be updated in-place
+  ~ resource "aws_vpc" "this" {
+        id                                   = "vpc-016b0524ea218c8d7"
+      ~ tags                                 = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+          ~ "Name"        = "poc-vpc-brooks" -> "poc-vpc"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+        }
+      ~ tags_all                             = {
+          ~ "Name"        = "poc-vpc-brooks" -> "poc-vpc"
+            # (4 unchanged elements hidden)
+        }
+        # (18 unchanged attributes hidden)
+    }
+
+Plan: 6 to add, 11 to change, 1 to destroy.
+
+Changes to Outputs:
+  ~ private_subnet_ids           = {
+      + poc-vpc-app-backend-subnet-us-east-1a         = "subnet-07f6b42fd24ff5004"
+      + poc-vpc-app-server-poc-us-east-1b             = "subnet-096fa1fc46bada279"
+      + poc-vpc-application-backend-us-east-1b        = "subnet-0cd880cd8991c7784"
+      - poc-vpc-brooks-app-backend-subnet-us-east-1a  = "subnet-07f6b42fd24ff5004"
+      - poc-vpc-brooks-app-server-poc-us-east-1b      = "subnet-096fa1fc46bada279"
+      - poc-vpc-brooks-application-backend-us-east-1b = "subnet-0cd880cd8991c7784"
+      - poc-vpc-brooks-poc-us-east-1a                 = "subnet-0ce4b3ea489eb67b3"
+      + poc-vpc-poc-us-east-1a                        = "subnet-0ce4b3ea489eb67b3"
+    }
+  ~ public_subnet_ids            = {
+      - poc-vpc-brooks-public-us-east-1a = "subnet-04f5541257dd15e83"
+      - poc-vpc-brooks-public-us-east-1b = "subnet-09d389b210e3aa1e2"
+      + poc-vpc-public-us-east-1a        = "subnet-04f5541257dd15e83"
+      + poc-vpc-public-us-east-1b        = "subnet-09d389b210e3aa1e2"
+    }
+random_string.bucket_suffix: Creating...
+random_string.bucket_suffix: Creation complete after 0s [id=9uh2uvca]
+module.vpc.aws_flow_log.s3[0]: Destroying... [id=fl-0af81d16766bb880d]
+module.vpc.aws_iam_policy.flowlogs_policy[0]: Creating...
+module.vpc.aws_flow_log.s3[0]: Destruction complete after 0s
+module.vpc.aws_iam_role.flowlogs_role[0]: Creating...
+module.vpc.aws_vpc.this: Modifying... [id=vpc-016b0524ea218c8d7]
+module.vpc.aws_iam_policy.flowlogs_policy[0]: Creation complete after 0s [id=arn:aws:iam::867344447298:policy/poc-vpc-flowlogs-cloudwatch-policy]
+module.vpc.aws_iam_role.flowlogs_role[0]: Creation complete after 1s [id=poc-vpc-flowlogs-cloudwatch-role]
+module.vpc.aws_iam_role_policy_attachment.flowlogs_policy[0]: Creating...
+module.vpc.aws_iam_role_policy_attachment.flowlogs_policy[0]: Creation complete after 0s [id=poc-vpc-flowlogs-cloudwatch-role-20250712023804611800000001]
+module.vpc.aws_vpc.this: Modifications complete after 1s [id=vpc-016b0524ea218c8d7]
+module.vpc.aws_cloudwatch_log_group.this[0]: Creating...
+module.vpc.aws_internet_gateway.this[0]: Modifying... [id=igw-0ccff6168fe93561b]
+module.vpc.aws_route_table.private[0]: Modifying... [id=rtb-07c2bda2f5cbf9d67]
+module.vpc.aws_subnet.private[3]: Modifying... [id=subnet-096fa1fc46bada279]
+module.vpc.aws_subnet.private[1]: Modifying... [id=subnet-0cd880cd8991c7784]
+module.vpc.aws_subnet.public[1]: Modifying... [id=subnet-09d389b210e3aa1e2]
+module.vpc.aws_subnet.public[0]: Modifying... [id=subnet-04f5541257dd15e83]
+module.vpc.aws_subnet.private[0]: Modifying... [id=subnet-07f6b42fd24ff5004]
+module.vpc.aws_subnet.private[2]: Modifying... [id=subnet-0ce4b3ea489eb67b3]
+module.vpc.aws_route_table.public[1]: Modifying... [id=rtb-075c3778ac6d74e7e]
+module.vpc.aws_internet_gateway.this[0]: Modifications complete after 0s [id=igw-0ccff6168fe93561b]
+module.vpc.aws_route_table.public[0]: Modifying... [id=rtb-01fdc407f6d1a3d25]
+module.vpc.aws_route_table.private[0]: Modifications complete after 0s [id=rtb-07c2bda2f5cbf9d67]
+module.vpc.aws_route_table.public[1]: Modifications complete after 0s [id=rtb-075c3778ac6d74e7e]
+module.vpc.aws_subnet.private[3]: Modifications complete after 0s [id=subnet-096fa1fc46bada279]
+module.vpc.aws_subnet.public[0]: Modifications complete after 0s [id=subnet-04f5541257dd15e83]
+module.vpc.aws_subnet.private[2]: Modifications complete after 0s [id=subnet-0ce4b3ea489eb67b3]
+module.vpc.aws_subnet.public[1]: Modifications complete after 0s [id=subnet-09d389b210e3aa1e2]
+module.vpc.aws_subnet.private[1]: Modifications complete after 0s [id=subnet-0cd880cd8991c7784]
+module.vpc.aws_route_table.public[0]: Modifications complete after 0s [id=rtb-01fdc407f6d1a3d25]
+module.vpc.aws_subnet.private[0]: Modifications complete after 0s [id=subnet-07f6b42fd24ff5004]
+module.vpc.aws_cloudwatch_log_group.this[0]: Creation complete after 1s [id=/aws/vpcflow/vpc-016b0524ea218c8d7]
+module.vpc.aws_flow_log.this[0]: Creating...
+module.vpc.aws_flow_log.this[0]: Creation complete after 0s [id=fl-0eea3c091180bd834]
+
+Apply complete! Resources: 6 added, 11 changed, 1 destroyed.
+
+Outputs:
+
+alb_sg_id = "sg-01f598e12e82a617e"
+alb_subnet_id = "subnet-09d389b210e3aa1e2"
+app_sg_id = "sg-0f078c0bb015467b5"
+asg_name = "app-servers-asg"
+load_balancer_dns = "poc-alb-1303871507.us-east-1.elb.amazonaws.com"
+load_balancer_url = "http://poc-alb-1303871507.us-east-1.elb.amazonaws.com"
+management_server_ip = "i-0675df31bd894c05c"
+management_server_private_ip = "10.1.1.113"
+management_sg_id = "sg-09a732777f15cc6b0"
+management_subnet_id = "subnet-04f5541257dd15e83"
+private_subnet_ids = {
+  "poc-vpc-app-backend-subnet-us-east-1a" = "subnet-07f6b42fd24ff5004"
+  "poc-vpc-app-server-poc-us-east-1b" = "subnet-096fa1fc46bada279"
+  "poc-vpc-application-backend-us-east-1b" = "subnet-0cd880cd8991c7784"
+  "poc-vpc-poc-us-east-1a" = "subnet-0ce4b3ea489eb67b3"
+}
+public_subnet_ids = {
+  "poc-vpc-public-us-east-1a" = "subnet-04f5541257dd15e83"
+  "poc-vpc-public-us-east-1b" = "subnet-09d389b210e3aa1e2"
+}
+vpc_id = "vpc-016b0524ea218c8d7"

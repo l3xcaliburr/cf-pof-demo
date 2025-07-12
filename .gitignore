@@ -1,0 +1,12 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+
+# Key Pairs
+*.pem
+cf-poc-key
+cf-poc-key.pem
+cf-poc-key.pub

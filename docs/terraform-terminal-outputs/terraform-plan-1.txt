@@ -1,0 +1,1335 @@
+# This is the first plan output prior to the initial deployment
+
+module.management_server.data.aws_ec2_instance_type.this: Reading...
+module.vpc.data.aws_region.current: Reading...
+module.vpc.module.vpc_endpoints.data.aws_region.current: Reading...
+data.aws_ami.amazon_linux: Reading...
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Reading...
+module.vpc.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.module.vpc_endpoints.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.management_server.data.aws_ec2_instance_type.this: Read complete after 0s [id=t2.micro]
+data.aws_ami.amazon_linux: Read complete after 0s [id=ami-0c6ebb5b9bce4ba15]
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Read complete after 2s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # aws_autoscaling_group.app will be created
+  + resource "aws_autoscaling_group" "app" {
+      + arn                              = (known after apply)
+      + availability_zones               = (known after apply)
+      + default_cooldown                 = (known after apply)
+      + desired_capacity                 = 2
+      + force_delete                     = false
+      + force_delete_warm_pool           = false
+      + health_check_grace_period        = 300
+      + health_check_type                = "ELB"
+      + id                               = (known after apply)
+      + ignore_failed_scaling_activities = false
+      + load_balancers                   = (known after apply)
+      + max_size                         = 6
+      + metrics_granularity              = "1Minute"
+      + min_size                         = 2
+      + name                             = "app-servers-asg"
+      + name_prefix                      = (known after apply)
+      + predicted_capacity               = (known after apply)
+      + protect_from_scale_in            = false
+      + service_linked_role_arn          = (known after apply)
+      + target_group_arns                = (known after apply)
+      + vpc_zone_identifier              = (known after apply)
+      + wait_for_capacity_timeout        = "10m"
+      + warm_pool_size                   = (known after apply)
+
+      + availability_zone_distribution (known after apply)
+
+      + capacity_reservation_specification (known after apply)
+
+      + launch_template {
+          + id      = (known after apply)
+          + name    = (known after apply)
+          + version = "$Latest"
+        }
+
+      + mixed_instances_policy (known after apply)
+
+      + tag {
+          + key                 = "Environment"
+          + propagate_at_launch = true
+          + value               = "poc"
+        }
+      + tag {
+          + key                 = "ManagedBy"
+          + propagate_at_launch = true
+          + value               = "terraform"
+        }
+      + tag {
+          + key                 = "Name"
+          + propagate_at_launch = false
+          + value               = "app-server-asg"
+        }
+      + tag {
+          + key                 = "Owner"
+          + propagate_at_launch = true
+          + value               = "alex-brooks"
+        }
+      + tag {
+          + key                 = "Project"
+          + propagate_at_launch = true
+          + value               = "web-server-poc"
+        }
+
+      + traffic_source (known after apply)
+    }
+
+  # aws_launch_template.app will be created
+  + resource "aws_launch_template" "app" {
+      + arn                    = (known after apply)
+      + default_version        = (known after apply)
+      + id                     = (known after apply)
+      + image_id               = "ami-0c6ebb5b9bce4ba15"
+      + instance_type          = "t2.micro"
+      + key_name               = "cf-poc-key"
+      + latest_version         = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "app-server-"
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + user_data              = "IyEvYmluL2Jhc2gKCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIyBBcGFjaGUgV2ViIFNlcnZlciBJbnN0YWxsYXRpb24gU2NyaXB0CiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KCiMgVXBkYXRlIHN5c3RlbSBwYWNrYWdlcwp5dW0gdXBkYXRlIC15CgojIEluc3RhbGwgQXBhY2hlIHdlYiBzZXJ2ZXIKeXVtIGluc3RhbGwgLXkgaHR0cGQKCiMgU3RhcnQgQXBhY2hlIHNlcnZpY2UKc3lzdGVtY3RsIHN0YXJ0IGh0dHBkCgojIEVuYWJsZSBBcGFjaGUgdG8gc3RhcnQgb24gYm9vdApzeXN0ZW1jdGwgZW5hYmxlIGh0dHBkCgojIENyZWF0ZSBhIHNpbXBsZSBpbmRleCBwYWdlIHdpdGggaW5zdGFuY2UgaW5mb3JtYXRpb24KY2F0IDw8SFRNTCA+IC92YXIvd3d3L2h0bWwvaW5kZXguaHRtbAo8IURPQ1RZUEUgaHRtbD4KPGh0bWwgbGFuZz0iZW4iPgo8aGVhZD4KICAgIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICAgIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICAgIDx0aXRsZT5QT0MgV2ViIFNlcnZlcjwvdGl0bGU+CiAgICA8c3R5bGU+CiAgICAgICAgYm9keSB7IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgbWFyZ2luOiA0MHB4OyBiYWNrZ3JvdW5kLWNvbG9yOiAjZjRmNGY0OyB9CiAgICAgICAgLmNvbnRhaW5lciB7IGJhY2tncm91bmQ6IHdoaXRlOyBwYWRkaW5nOiAyMHB4OyBib3JkZXItcmFkaXVzOiA4cHg7IGJveC1zaGFkb3c6IDAgMnB4IDRweCByZ2JhKDAsMCwwLDAuMSk7IH0KICAgICAgICAuaGVhZGVyIHsgY29sb3I6ICMzMzM7IGJvcmRlci1ib3R0b206IDJweCBzb2xpZCAjMDA3YWNjOyBwYWRkaW5nLWJvdHRvbTogMTBweDsgfQogICAgICAgIC5pbmZvIHsgbWFyZ2luOiAyMHB4IDA7IH0KICAgICAgICAuc3VjY2VzcyB7IGNvbG9yOiAjMjhhNzQ1OyBmb250LXdlaWdodDogYm9sZDsgfQogICAgPC9zdHlsZT4KPC9oZWFkPgo8Ym9keT4KICAgIDxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CiAgICAgICAgPGgxIGNsYXNzPSJoZWFkZXIiPvCfmoAgUE9DIFdlYiBTZXJ2ZXI8L2gxPgogICAgICAgIDxkaXYgY2xhc3M9ImluZm8iPgogICAgICAgICAgICA8cCBjbGFzcz0ic3VjY2VzcyI+4pyFIEFwYWNoZSBIVFRQIFNlcnZlciBpcyBydW5uaW5nIHN1Y2Nlc3NmdWxseSE8L3A+CiAgICAgICAgICAgIDxwPjxzdHJvbmc+SW5zdGFuY2UgSUQ6PC9zdHJvbmc+IDxzcGFuIGlkPSJpbnN0YW5jZS1pZCI+TG9hZGluZy4uLjwvc3Bhbj48L3A+CiAgICAgICAgICAgIDxwPjxzdHJvbmc+QXZhaWxhYmlsaXR5IFpvbmU6PC9zdHJvbmc+IDxzcGFuIGlkPSJheiI+TG9hZGluZy4uLjwvc3Bhbj48L3A+CiAgICAgICAgICAgIDxwPjxzdHJvbmc+UHJpdmF0ZSBJUDo8L3N0cm9uZz4gPHNwYW4gaWQ9InByaXZhdGUtaXAiPkxvYWRpbmcuLi48L3NwYW4+PC9wPgogICAgICAgICAgICA8cD48c3Ryb25nPlJlZ2lvbjo8L3N0cm9uZz4gdXMtZWFzdC0xPC9wPgogICAgICAgICAgICA8cD48c3Ryb25nPkRlcGxveW1lbnQ6PC9zdHJvbmc+IFRlcnJhZm9ybSArIEF1dG8gU2NhbGluZyBHcm91cDwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cD48ZW0+VGhpcyBzZXJ2ZXIgaXMgZGVwbG95ZWQgaW4gYSBwcml2YXRlIHN1Ym5ldCBhbmQgYWNjZXNzaWJsZSBvbmx5IHRocm91Z2ggdGhlIEFwcGxpY2F0aW9uIExvYWQgQmFsYW5jZXIuPC9lbT48L3A+CiAgICA8L2Rpdj4KCiAgICA8c2NyaXB0PgogICAgICAgIC8vIEZldGNoIGluc3RhbmNlIG1ldGFkYXRhCiAgICAgICAgZmV0Y2goJ2h0dHA6Ly8xNjkuMjU0LjE2OS4yNTQvbGF0ZXN0L21ldGEtZGF0YS9pbnN0YW5jZS1pZCcpCiAgICAgICAgICAgIC50aGVuKHJlc3BvbnNlID0+IHJlc3BvbnNlLnRleHQoKSkKICAgICAgICAgICAgLnRoZW4oZGF0YSA9PiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnaW5zdGFuY2UtaWQnKS50ZXh0Q29udGVudCA9IGRhdGEpCiAgICAgICAgICAgIC5jYXRjaCgoKSA9PiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnaW5zdGFuY2UtaWQnKS50ZXh0Q29udGVudCA9ICdOb3QgYXZhaWxhYmxlJyk7CgogICAgICAgIGZldGNoKCdodHRwOi8vMTY5LjI1NC4xNjkuMjU0L2xhdGVzdC9tZXRhLWRhdGEvcGxhY2VtZW50L2F2YWlsYWJpbGl0eS16b25lJykKICAgICAgICAgICAgLnRoZW4ocmVzcG9uc2UgPT4gcmVzcG9uc2UudGV4dCgpKQogICAgICAgICAgICAudGhlbihkYXRhID0+IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdheicpLnRleHRDb250ZW50ID0gZGF0YSkKICAgICAgICAgICAgLmNhdGNoKCgpID0+IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdheicpLnRleHRDb250ZW50ID0gJ05vdCBhdmFpbGFibGUnKTsKCiAgICAgICAgZmV0Y2goJ2h0dHA6Ly8xNjkuMjU0LjE2OS4yNTQvbGF0ZXN0L21ldGEtZGF0YS9sb2NhbC1pcHY0JykKICAgICAgICAgICAgLnRoZW4ocmVzcG9uc2UgPT4gcmVzcG9uc2UudGV4dCgpKQogICAgICAgICAgICAudGhlbihkYXRhID0+IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdwcml2YXRlLWlwJykudGV4dENvbnRlbnQgPSBkYXRhKQogICAgICAgICAgICAuY2F0Y2goKCkgPT4gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3ByaXZhdGUtaXAnKS50ZXh0Q29udGVudCA9ICdOb3QgYXZhaWxhYmxlJyk7CiAgICA8L3NjcmlwdD4KPC9ib2R5Pgo8L2h0bWw+CkhUTUwKCiMgU2V0IHByb3BlciBwZXJtaXNzaW9ucwpjaG93biBhcGFjaGU6YXBhY2hlIC92YXIvd3d3L2h0bWwvaW5kZXguaHRtbApjaG1vZCA2NDQgL3Zhci93d3cvaHRtbC9pbmRleC5odG1sCgojIExvZyBjb21wbGV0aW9uCmVjaG8gIiQoZGF0ZSk6IEFwYWNoZSBpbnN0YWxsYXRpb24gYW5kIGNvbmZpZ3VyYXRpb24gY29tcGxldGVkIiA+PiAvdmFyL2xvZy91c2VyLWRhdGEubG9n"
+      + vpc_security_group_ids = (known after apply)
+
+      + metadata_options (known after apply)
+
+      + tag_specifications {
+          + resource_type = "instance"
+          + tags          = {
+              + "Environment" = "poc"
+              + "ManagedBy"   = "terraform"
+              + "Name"        = "app-server"
+              + "Owner"       = "alex-brooks"
+              + "Project"     = "web-server-poc"
+              + "Type"        = "application"
+            }
+        }
+    }
+
+  # aws_lb.main will be created
+  + resource "aws_lb" "main" {
+      + arn                                                          = (known after apply)
+      + arn_suffix                                                   = (known after apply)
+      + client_keep_alive                                            = 3600
+      + desync_mitigation_mode                                       = "defensive"
+      + dns_name                                                     = (known after apply)
+      + drop_invalid_header_fields                                   = false
+      + enable_deletion_protection                                   = false
+      + enable_http2                                                 = true
+      + enable_tls_version_and_cipher_suite_headers                  = false
+      + enable_waf_fail_open                                         = false
+      + enable_xff_client_port                                       = false
+      + enable_zonal_shift                                           = false
+      + enforce_security_group_inbound_rules_on_private_link_traffic = (known after apply)
+      + id                                                           = (known after apply)
+      + idle_timeout                                                 = 60
+      + internal                                                     = false
+      + ip_address_type                                              = (known after apply)
+      + load_balancer_type                                           = "application"
+      + name                                                         = "poc-alb"
+      + name_prefix                                                  = (known after apply)
+      + preserve_host_header                                         = false
+      + security_groups                                              = (known after apply)
+      + subnets                                                      = (known after apply)
+      + tags                                                         = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-alb"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                                     = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-alb"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                                       = (known after apply)
+      + xff_header_processing_mode                                   = "append"
+      + zone_id                                                      = (known after apply)
+
+      + subnet_mapping (known after apply)
+    }
+
+  # aws_lb_listener.app will be created
+  + resource "aws_lb_listener" "app" {
+      + arn                                                                   = (known after apply)
+      + id                                                                    = (known after apply)
+      + load_balancer_arn                                                     = (known after apply)
+      + port                                                                  = 80
+      + protocol                                                              = "HTTP"
+      + routing_http_request_x_amzn_mtls_clientcert_header_name               = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_issuer_header_name        = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_leaf_header_name          = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_subject_header_name       = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_validity_header_name      = (known after apply)
+      + routing_http_request_x_amzn_tls_cipher_suite_header_name              = (known after apply)
+      + routing_http_request_x_amzn_tls_version_header_name                   = (known after apply)
+      + routing_http_response_access_control_allow_credentials_header_value   = (known after apply)
+      + routing_http_response_access_control_allow_headers_header_value       = (known after apply)
+      + routing_http_response_access_control_allow_methods_header_value       = (known after apply)
+      + routing_http_response_access_control_allow_origin_header_value        = (known after apply)
+      + routing_http_response_access_control_expose_headers_header_value      = (known after apply)
+      + routing_http_response_access_control_max_age_header_value             = (known after apply)
+      + routing_http_response_content_security_policy_header_value            = (known after apply)
+      + routing_http_response_server_enabled                                  = (known after apply)
+      + routing_http_response_strict_transport_security_header_value          = (known after apply)
+      + routing_http_response_x_content_type_options_header_value             = (known after apply)
+      + routing_http_response_x_frame_options_header_value                    = (known after apply)
+      + ssl_policy                                                            = (known after apply)
+      + tags_all                                                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tcp_idle_timeout_seconds                                              = (known after apply)
+
+      + default_action {
+          + order            = (known after apply)
+          + target_group_arn = (known after apply)
+          + type             = "forward"
+        }
+
+      + mutual_authentication (known after apply)
+    }
+
+  # aws_lb_target_group.app will be created
+  + resource "aws_lb_target_group" "app" {
+      + arn                                = (known after apply)
+      + arn_suffix                         = (known after apply)
+      + connection_termination             = (known after apply)
+      + deregistration_delay               = "300"
+      + id                                 = (known after apply)
+      + ip_address_type                    = (known after apply)
+      + lambda_multi_value_headers_enabled = false
+      + load_balancer_arns                 = (known after apply)
+      + load_balancing_algorithm_type      = (known after apply)
+      + load_balancing_anomaly_mitigation  = (known after apply)
+      + load_balancing_cross_zone_enabled  = (known after apply)
+      + name                               = "app-servers-tg"
+      + name_prefix                        = (known after apply)
+      + port                               = 80
+      + preserve_client_ip                 = (known after apply)
+      + protocol                           = "HTTP"
+      + protocol_version                   = (known after apply)
+      + proxy_protocol_v2                  = false
+      + slow_start                         = 0
+      + tags                               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "app-servers-tg"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "app-servers-tg"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + target_type                        = "instance"
+      + vpc_id                             = (known after apply)
+
+      + health_check {
+          + enabled             = true
+          + healthy_threshold   = 2
+          + interval            = 30
+          + matcher             = "200"
+          + path                = "/"
+          + port                = "traffic-port"
+          + protocol            = "HTTP"
+          + timeout             = 5
+          + unhealthy_threshold = 2
+        }
+
+      + stickiness (known after apply)
+
+      + target_failover (known after apply)
+
+      + target_group_health (known after apply)
+
+      + target_health_state (known after apply)
+    }
+
+  # aws_security_group.alb_sg will be created
+  + resource "aws_security_group" "alb_sg" {
+      + arn                    = (known after apply)
+      + description            = "Security group for Application Load Balancer"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "All outbound traffic"
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "HTTP from internet"
+              + from_port        = 80
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 80
+            },
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "HTTPS from internet"
+              + from_port        = 443
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 443
+            },
+        ]
+      + name                   = "alb-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "alb-sg"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "load-balancer"
+        }
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "alb-sg"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "load-balancer"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.app_sg.aws_security_group.this will be created
+  + resource "aws_security_group" "this" {
+      + arn                    = (known after apply)
+      + description            = "Security group for application servers"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "app-servers-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "application"
+        }
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "application"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.app_sg.aws_vpc_security_group_egress_rule.this["all_outbound"] will be created
+  + resource "aws_vpc_security_group_egress_rule" "this" {
+      + arn                    = (known after apply)
+      + cidr_ipv4              = "0.0.0.0/0"
+      + description            = "All outbound traffic"
+      + id                     = (known after apply)
+      + ip_protocol            = "-1"
+      + security_group_id      = (known after apply)
+      + security_group_rule_id = (known after apply)
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+    }
+
+  # module.app_sg.aws_vpc_security_group_ingress_rule.this["http_from_alb"] will be created
+  + resource "aws_vpc_security_group_ingress_rule" "this" {
+      + arn                          = (known after apply)
+      + description                  = "HTTP from ALB"
+      + from_port                    = 80
+      + id                           = (known after apply)
+      + ip_protocol                  = "tcp"
+      + referenced_security_group_id = (known after apply)
+      + security_group_id            = (known after apply)
+      + security_group_rule_id       = (known after apply)
+      + tags_all                     = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + to_port                      = 80
+    }
+
+  # module.app_sg.aws_vpc_security_group_ingress_rule.this["ssh_from_mgmt"] will be created
+  + resource "aws_vpc_security_group_ingress_rule" "this" {
+      + arn                          = (known after apply)
+      + description                  = "SSH from management server"
+      + from_port                    = 22
+      + id                           = (known after apply)
+      + ip_protocol                  = "tcp"
+      + referenced_security_group_id = (known after apply)
+      + security_group_id            = (known after apply)
+      + security_group_rule_id       = (known after apply)
+      + tags_all                     = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + to_port                      = 22
+    }
+
+  # module.management_server.aws_instance.this[0] will be created
+  + resource "aws_instance" "this" {
+      + ami                                  = "ami-0c6ebb5b9bce4ba15"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = false
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = false
+      + enable_primary_ipv6                  = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "cf-poc-key"
+      + monitoring                           = true
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "CNAME"       = "management-server1"
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "management-server1"
+          + "Owner"       = "alex-brooks"
+          + "PatchGroup"  = "1"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + tags_all                             = {
+          + "CNAME"       = "management-server1"
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "management-server1"
+          + "Owner"       = "alex-brooks"
+          + "PatchGroup"  = "1"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + volume_tags                          = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "management-server1"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + vpc_security_group_ids               = (known after apply)
+
+      + capacity_reservation_specification (known after apply)
+
+      + cpu_options (known after apply)
+
+      + ebs_block_device (known after apply)
+
+      + enclave_options (known after apply)
+
+      + ephemeral_block_device (known after apply)
+
+      + instance_market_options (known after apply)
+
+      + maintenance_options (known after apply)
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = "disabled"
+          + http_put_response_hop_limit = 1
+          + http_tokens                 = "required"
+          + instance_metadata_tags      = "enabled"
+        }
+
+      + network_interface (known after apply)
+
+      + private_dns_name_options (known after apply)
+
+      + root_block_device {
+          + delete_on_termination = true
+          + device_name           = (known after apply)
+          + encrypted             = true
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + tags_all              = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = 10
+          + volume_type           = "gp3"
+        }
+    }
+
+  # module.management_server.aws_instance.this[1] will be created
+  + resource "aws_instance" "this" {
+      + ami                                  = "ami-0c6ebb5b9bce4ba15"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = false
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = false
+      + enable_primary_ipv6                  = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "cf-poc-key"
+      + monitoring                           = true
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "CNAME"       = "management-server2"
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "management-server2"
+          + "Owner"       = "alex-brooks"
+          + "PatchGroup"  = "2"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + tags_all                             = {
+          + "CNAME"       = "management-server2"
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "management-server2"
+          + "Owner"       = "alex-brooks"
+          + "PatchGroup"  = "2"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + volume_tags                          = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "management-server2"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + vpc_security_group_ids               = (known after apply)
+
+      + capacity_reservation_specification (known after apply)
+
+      + cpu_options (known after apply)
+
+      + ebs_block_device (known after apply)
+
+      + enclave_options (known after apply)
+
+      + ephemeral_block_device (known after apply)
+
+      + instance_market_options (known after apply)
+
+      + maintenance_options (known after apply)
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = "disabled"
+          + http_put_response_hop_limit = 1
+          + http_tokens                 = "required"
+          + instance_metadata_tags      = "enabled"
+        }
+
+      + network_interface (known after apply)
+
+      + private_dns_name_options (known after apply)
+
+      + root_block_device {
+          + delete_on_termination = true
+          + device_name           = (known after apply)
+          + encrypted             = true
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + tags_all              = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = 10
+          + volume_type           = "gp3"
+        }
+    }
+
+  # module.management_sg.aws_security_group.this will be created
+  + resource "aws_security_group" "this" {
+      + arn                    = (known after apply)
+      + description            = "Security group for management server"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "management-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "management"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.management_sg.aws_vpc_security_group_egress_rule.this["all_outbound"] will be created
+  + resource "aws_vpc_security_group_egress_rule" "this" {
+      + arn                    = (known after apply)
+      + cidr_ipv4              = "0.0.0.0/0"
+      + description            = "All outbound traffic"
+      + id                     = (known after apply)
+      + ip_protocol            = "-1"
+      + security_group_id      = (known after apply)
+      + security_group_rule_id = (known after apply)
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+    }
+
+  # module.management_sg.aws_vpc_security_group_ingress_rule.this["ssh"] will be created
+  + resource "aws_vpc_security_group_ingress_rule" "this" {
+      + arn                    = (known after apply)
+      + cidr_ipv4              = "203.0.113.25/32"
+      + description            = "SSH from authorized IP"
+      + from_port              = 22
+      + id                     = (known after apply)
+      + ip_protocol            = "tcp"
+      + security_group_id      = (known after apply)
+      + security_group_rule_id = (known after apply)
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + to_port                = 22
+    }
+
+  # module.vpc.data.aws_iam_policy_document.flowlogs_policy[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "flowlogs_policy" {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + minified_json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "s3:GetBucketAcl",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + (known after apply),
+            ]
+
+          + principals {
+              + identifiers = [
+                  + "delivery.logs.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+      + statement {
+          + actions   = [
+              + "s3:PutObject",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + (known after apply),
+            ]
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "bucket-owner-full-control",
+                ]
+              + variable = "s3:x-amz-acl"
+            }
+
+          + principals {
+              + identifiers = [
+                  + "delivery.logs.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+      + statement {
+          + actions   = [
+              + "s3:GetObject",
+              + "s3:ListBucket",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + (known after apply),
+              + (known after apply),
+            ]
+
+          + principals {
+              + identifiers = [
+                  + "ec2.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+    }
+
+  # module.vpc.aws_default_security_group.default will be created
+  + resource "aws_default_security_group" "default" {
+      + arn                    = (known after apply)
+      + description            = (known after apply)
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags_all               = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.aws_flow_log.s3[0] will be created
+  + resource "aws_flow_log" "s3" {
+      + arn                      = (known after apply)
+      + id                       = (known after apply)
+      + log_destination          = (known after apply)
+      + log_destination_type     = "s3"
+      + log_format               = (known after apply)
+      + log_group_name           = (known after apply)
+      + max_aggregation_interval = 600
+      + tags_all                 = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + traffic_type             = "ALL"
+      + vpc_id                   = (known after apply)
+    }
+
+  # module.vpc.aws_internet_gateway.this[0] will be created
+  + resource "aws_internet_gateway" "this" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # module.vpc.aws_route.public_internet_gateway[0] will be created
+  + resource "aws_route" "public_internet_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+  # module.vpc.aws_route.public_internet_gateway[1] will be created
+  + resource "aws_route" "public_internet_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+  # module.vpc.aws_route_table.private[0] will be created
+  + resource "aws_route_table" "private" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-private"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all         = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-private"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.aws_route_table.public[0] will be created
+  + resource "aws_route_table" "public" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1a-rtb"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all         = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1a-rtb"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.aws_route_table.public[1] will be created
+  + resource "aws_route_table" "public" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1b-rtb"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all         = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1b-rtb"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[0] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[1] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[2] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[3] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.public[0] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.public[1] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_s3_bucket.flowlogs[0] will be created
+  + resource "aws_s3_bucket" "flowlogs" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "poc-vpc-flowlogs"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # module.vpc.aws_s3_bucket_logging.flowlogs[0] will be created
+  + resource "aws_s3_bucket_logging" "flowlogs" {
+      + bucket        = (known after apply)
+      + id            = (known after apply)
+      + target_prefix = "flowlogs/"
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.vpc.aws_s3_bucket_policy.flowlogs_bucket_policy[0] will be created
+  + resource "aws_s3_bucket_policy" "flowlogs_bucket_policy" {
+      + bucket = "poc-vpc-flowlogs"
+      + id     = (known after apply)
+      + policy = (known after apply)
+    }
+
+  # module.vpc.aws_s3_bucket_public_access_block.flowlogs[0] will be created
+  + resource "aws_s3_bucket_public_access_block" "flowlogs" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+  # module.vpc.aws_s3_bucket_server_side_encryption_configuration.flowlogs-encryption[0] will be created
+  + resource "aws_s3_bucket_server_side_encryption_configuration" "flowlogs-encryption" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + rule {
+          + apply_server_side_encryption_by_default {
+              + sse_algorithm     = "aws:kms"
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # module.vpc.aws_subnet.private[0] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.1.2.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-app-backend-subnet-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                       = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-app-backend-subnet-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[1] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.1.5.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-application-backend-us-east-1b"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                       = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-application-backend-us-east-1b"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[2] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.1.3.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-poc-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                       = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-poc-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[3] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.1.6.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-app-server-poc-us-east-1b"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                       = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-app-server-poc-us-east-1b"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[0] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.1.1.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = true
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                       = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1a"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[1] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.1.4.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = true
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1b"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                                       = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc-public-us-east-1b"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_vpc.this will be created
+  + resource "aws_vpc" "this" {
+      + arn                                  = (known after apply)
+      + assign_generated_ipv6_cidr_block     = false
+      + cidr_block                           = "10.1.0.0/16"
+      + default_network_acl_id               = (known after apply)
+      + default_route_table_id               = (known after apply)
+      + default_security_group_id            = (known after apply)
+      + dhcp_options_id                      = (known after apply)
+      + enable_dns_hostnames                 = true
+      + enable_dns_support                   = true
+      + enable_network_address_usage_metrics = (known after apply)
+      + id                                   = (known after apply)
+      + instance_tenancy                     = "default"
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      + main_route_table_id                  = (known after apply)
+      + owner_id                             = (known after apply)
+      + tags                                 = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+      + tags_all                             = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-vpc"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+        }
+    }
+
+Plan: 41 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + alb_sg_id                    = (known after apply)
+  + alb_subnet_id                = (known after apply)
+  + app_sg_id                    = (known after apply)
+  + asg_name                     = "app-servers-asg"
+  + load_balancer_dns            = (known after apply)
+  + load_balancer_url            = (known after apply)
+  + management_server_ip         = (known after apply)
+  + management_server_private_ip = (known after apply)
+  + management_sg_id             = (known after apply)
+  + management_subnet_id         = (known after apply)
+  + private_subnet_ids           = {
+      + poc-vpc-app-backend-subnet-us-east-1a  = (known after apply)
+      + poc-vpc-app-server-poc-us-east-1b      = (known after apply)
+      + poc-vpc-application-backend-us-east-1b = (known after apply)
+      + poc-vpc-poc-us-east-1a                 = (known after apply)
+    }
+  + public_subnet_ids            = {
+      + poc-vpc-public-us-east-1a = (known after apply)
+      + poc-vpc-public-us-east-1b = (known after apply)
+    }
+  + vpc_id                       = (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
