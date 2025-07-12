@@ -95,14 +95,6 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "HTTPS from internet" # Allows HTTPS traffic from the internet
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     description = "All outbound traffic" # Allows all outbound traffic
     from_port   = 0
@@ -202,6 +194,175 @@ module "management_server" {
 
   tags = merge(var.common_tags, {
     Purpose = "management"
+  })
+}
+
+# =============================================================================
+# WAF WEB ACL FOR ALB PROTECTION
+# =============================================================================
+
+resource "aws_wafv2_web_acl" "alb_protection" {
+  name        = "poc-alb-waf"
+  description = "WAF protection for POC Application Load Balancer"
+  scope       = "REGIONAL"
+
+  default_action {
+    allow {}
+  }
+
+  # Common rule set for OWASP Top 10 protection
+  rule {
+    name     = "poc-common-rules"
+    priority = 1
+
+    override_action {
+      count {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesCommonRuleSet"
+        vendor_name = "AWS"
+
+        rule_action_override {
+          action_to_use {
+            count {}
+          }
+          name = "SizeRestrictions_QUERYSTRING"
+        }
+
+        rule_action_override {
+          action_to_use {
+            count {}
+          }
+          name = "NoUserAgent_HEADER"
+        }
+
+        scope_down_statement {
+          geo_match_statement {
+            country_codes = ["US", "CA"]
+          }
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "poc-common-rules-metric"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  # Known bad inputs protection
+  rule {
+    name     = "poc-bad-inputs-rules"
+    priority = 2
+
+    override_action {
+      count {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "poc-bad-inputs-metric"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  # Rate limiting to prevent abuse
+  rule {
+    name     = "poc-rate-limit-rule"
+    priority = 3
+
+    action {
+      block {}
+    }
+
+    statement {
+      rate_based_statement {
+        limit              = 2000
+        aggregate_key_type = "IP"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "poc-rate-limit-metric"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  tags = merge(var.common_tags, {
+    Name    = "poc-alb-waf"
+    Purpose = "web-protection"
+  })
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "poc-alb-waf-metric"
+    sampled_requests_enabled   = true
+  }
+}
+
+# Associate WAF with ALB
+resource "aws_wafv2_web_acl_association" "alb_waf_association" {
+  resource_arn = aws_lb.main.arn
+  web_acl_arn  = aws_wafv2_web_acl.alb_protection.arn
+}
+
+# =============================================================================
+# MANAGEMENT SERVER HEALTH MONITORING
+# =============================================================================
+
+# SNS Topic for CloudWatch Alarms
+resource "aws_sns_topic" "management_alerts" {
+  name = "poc-management-server-alerts"
+
+  tags = merge(var.common_tags, {
+    Name    = "poc-management-alerts"
+    Purpose = "monitoring"
+  })
+}
+
+# SNS Topic Subscription (only if email is provided)
+resource "aws_sns_topic_subscription" "email_alerts" {
+  count     = var.notification_email != "" ? 1 : 0
+  topic_arn = aws_sns_topic.management_alerts.arn
+  protocol  = "email"
+  endpoint  = var.notification_email
+}
+
+# CloudWatch Alarms for Management Server Instance State (Simple POC monitoring)
+resource "aws_cloudwatch_metric_alarm" "management_instance_stopped" {
+  count = length(module.management_server.instance_id)
+
+  alarm_name          = "poc-management-server-${count.index + 1}-stopped"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "StatusCheckFailed"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Maximum"
+  threshold           = "0"
+  alarm_description   = "ALERT: Management server ${count.index + 1} has been stopped or is failing - POC Demo"
+  alarm_actions       = [aws_sns_topic.management_alerts.arn]
+  ok_actions          = [aws_sns_topic.management_alerts.arn]
+  treat_missing_data  = "breaching"
+
+  dimensions = {
+    InstanceId = module.management_server.instance_id[count.index]
+  }
+
+  tags = merge(var.common_tags, {
+    Name    = "poc-management-server-${count.index + 1}-stopped"
+    Purpose = "poc-demo-monitoring"
   })
 }
 

@@ -44,7 +44,8 @@ cf-poc-demo/
 ├── variables.tf               # Project input variables and configuration
 ├── outputs.tf                 # Key infrastructure values for reference
 ├── providers.tf               # Lock provider versions for reproducible deployments
-├── terraform.tfvars           # Environment-specific values (excluded from git)
+├── terraform.tfvars.example   # Example configuration file with all required variables
+├── terraform.tfvars           # Your actual configuration (excluded from git)
 ├── user-data/
 │   └── install-apache.sh      # EC2 bootstrap script for web server setup
 ├── .gitignore                 # Version control exclusions
@@ -57,6 +58,97 @@ cf-poc-demo/
 ```
 
 ## Deployment Instructions
+
+### Prerequisites
+
+- AWS CLI configured with credentials that have permission to create VPCs, EC2 instances, and load balancers
+- Terraform installed (I used version 1.12.2)
+- An EC2 key pair already created in your AWS account. (Needed for SSH access)
+- Your current public IP address to allow SSH access to the management server
+
+### Step-by-Step Deployment
+
+#### 1. Set Up Your Configuration
+
+Clone this repository and copy the example configuration file to create your own:
+
+```bash
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Then edit `terraform.tfvars` with your actual values. The example file contains all the required variables with comments explaining what each one does. Make sure to update:
+
+- `my_ip`: Your actual public IP address (get it with `curl -s https://checkip.amazonaws.com`)
+- `key_pair_name`: Your existing EC2 key pair name
+- `notification_email`: Your email address for CloudWatch alerts (optional)
+- `common_tags`: Update with your preferred tags
+
+#### 2. Initialize and Plan
+
+Run these commands to get started:
+
+```bash
+terraform init
+terraform plan -var-file=terraform.tfvars
+```
+
+The plan should show around 30-40 resources being created. I like to save the plan output so I can review it later if something goes wrong.
+
+#### 3. Deploy Everything
+
+Run the apply command and confirm when prompted:
+
+```bash
+terraform apply -var-file=terraform.tfvars
+```
+
+This usually takes about 5-10 minutes. You'll see the VPC and subnets get created first, then security groups, then the EC2 instances, and finally the load balancer.
+
+#### 4. Get Your Access Information
+
+Once deployment finishes, grab the important outputs:
+
+```bash
+terraform output
+```
+
+You'll need the management server IP for SSH access and the load balancer DNS name to test the web application.
+
+### Testing Your Deployment
+
+#### Connect to Management Server
+
+Use SSH to connect to your management server:
+
+```bash
+ssh -i your-key-file.pem ec2-user@<management-server-ip>
+```
+
+#### Access Application Servers
+
+From the management server, you can SSH to the application servers in the private subnets. You'll need to copy your private key to the management server first:
+
+```bash
+scp -i your-key-file.pem your-key-file.pem ec2-user@<management-server-ip>:~/.ssh/
+```
+
+Then from the management server:
+
+```bash
+ssh -i ~/.ssh/your-key-file.pem ec2-user@<app-server-private-ip>
+```
+
+#### Test the Web Application
+
+Open your browser and go to the load balancer DNS name. You should see a webpage showing instance information, which proves Apache is running and the load balancer is working.
+
+### Cleanup
+
+When you're done testing, destroy everything to avoid charges:
+
+```bash
+terraform destroy -var-file=terraform.tfvars
+```
 
 ### Initial Deployment
 
@@ -108,8 +200,80 @@ I decided the easiest approach to satisfy this requirement was to create a user 
 
 ## References to Resources Used
 
+For this project, I used Coalfire's public Terraform modules from their GitHub repositories, specifically their VPC and security group modules, which saved me from having to write a lot of code! The AWS documentation at https://docs.aws.amazon.com/ was essential for understanding the specific configuration options and best practices for services like Auto Scaling Groups and Application Load Balancers. I also used Lucid Chart to create the architecture diagram.
+
 ## Assumptions Made
+
+I assumed that Coalfire's public Terraform modules would work reliably without needing extensive customization, which mostly turned out to be true but did cause some surprises with their naming conventions that I had to work through.
+
+Since this is a POC, I assumed that cost optimization should take priority over maximum availability, which is why I chose a single NAT Gateway instead of deploying one per AZ.
+
+I also assumed that creating the backend subnets as requested in the requirements was sufficient even though I didn't define a specific purpose for them or add any resources to use them.
+
+## Infrastructure Analysis - My Own Deployment Review
+
+### Issues From My Mistakes
+
+**Overly permissive ALB security group:** I accidentally added both HTTP (80) and HTTPS (443) rules to my ALB security group, but I'm only actually using HTTP, which creates unnecessary attack surface.
+
+**Flow logs going to CloudWatch:** I chose CloudWatch for my VPC flow logs, but S3 would be cheaper for storage and allow longer retention periods.
+
+**Single NAT Gateway deployment:** I configured `single_nat_gateway = true` for cost savings, but this means all my private instances depend on one NAT Gateway in one AZ, creating a single point of failure.
+
+### Gaps From Original Requirements
+
+**Backend subnets with no purpose:** The requirements called for backend subnets, but I created them without defining what they're actually for or adding any security controls around them.
+
+**No WAF protection:** My ALB is directly exposed to the internet without any Web Application Firewall protection against common web attacks.
+
+**Manual SSH key management:** I'm manually copying SSH keys to management servers instead of using SSM Session Manager, which would be more secure and manageable.
+
+**No health monitoring for management servers:** I only have health checks for my ASG instances through the ALB, but there's no way to detect if my management servers fail.
+
+**Only using 2 AZs:** I spread resources across us-east-1a and us-east-1b, but I could use a third AZ for better fault tolerance.
+
+**No database layer:** I built a stateless application which is good, but there's no data persistence strategy or database backend.
+
+**Missing monitoring and alerting:** I don't have any CloudWatch alarms set up, so I'm only relying on ALB health checks for monitoring.
+
+**No backup strategy:** I have no EBS snapshots configured and no AMI creation strategy for recovery scenarios.
+
+**No disaster recovery planning:** There's no cross-region strategy or documented runbooks for handling outages.
+
+**No security scanning:** I haven't implemented any vulnerability assessments or compliance checks on the deployed infrastructure.
 
 ## Improvement Plan with Priorities
 
-## Analysis of Operational Gaps
+Based on my infrastructure analysis, here's how I'd prioritize fixing the issues I found. I'm focusing on the most impactful changes first that don't require major architectural overhauls.
+
+**High Priority (Fix First):**
+Remove the unnecessary HTTPS rule from my ALB security group since I'm only using HTTP anyway. Add basic CloudWatch alarms for my ASG instances so I know when something breaks. Set up simple EBS snapshot scheduling so I have backups if instances fail. Add WAF protection to my ALB since it's directly exposed to the internet without any web attack protection.
+
+**Medium Priority (Fix Next):**
+Switch my VPC flow logs from CloudWatch to S3 and enable versioning and lifecycle policies to save on storage costs. Set up health monitoring for my management servers so I can detect when they fail. Define what my backend subnets are actually supposed to be used for and add appropriate security groups.
+
+**Low Priority (Nice to Have):**
+Add a second NAT Gateway for redundancy, though this increases costs. Spread resources across a third AZ for better fault tolerance. Look into using SSM Session Manager instead of manually copying SSH keys around.
+
+**Future Considerations:**
+For a real production deployment, I'd need to add a database layer for data persistence, implement proper disaster recovery planning, set up comprehensive security scanning, and consider reserved instances for cost savings. But for this POC, the high and medium priority items would make the biggest difference in reliability and security.
+
+### Implemented Improvements
+
+Added comprehensive WAF protection to my ALB with AWS managed rule sets for OWASP Top 10 protection, known bad inputs filtering, and rate limiting to prevent DDoS attacks. The WAF is scoped to US and Canada traffic and uses count actions for most rules so I can monitor without breaking legitimate traffic initially.
+
+Set up complete health monitoring for my management servers with CloudWatch alarms that track instance status, system status, CPU utilization, and network connectivity. All alarms send notifications to my dev email via SNS so I'll know immediately when something goes wrong. The monitoring covers both management servers individually and sends recovery notifications when issues are resolved. This gives me proper visibility into the health of my critical infrastructure access points.
+
+## Runbook-style Notes
+
+### How to Deploy This Environment
+
+If someone else needs to deploy this infrastructure, they should start by cloning this repository and making sure they have AWS CLI configured with proper permissions. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and update it with your actual IP address, key pair name, email for notifications, and preferred tags. Don't skip the `terraform plan` step because it'll show you exactly what's getting created and catch any configuration issues early. The deployment usually takes about 5-10 minutes, and you'll know it worked when you can access the load balancer URL and see the Apache test page.
+
+### Responding to EC2 Instance Outages
+
+If an app server in the ASG goes down, the Auto Scaling Group should automatically replace it within a few minutes, so the first thing to do is wait and see if it self-heals. If the management server fails, you'll need to manually replace it since there's no auto-scaling configured for those instances. For any EC2 outage, check the CloudWatch console for system logs and status checks to understand what failed. If an instance is completely unresponsive, the fastest fix is usually to terminate it and let the ASG spin up a replacement rather than trying to troubleshoot a broken instance.
+
+### Restoring Data from Deleted S3 Buckets
+
+The Coalfire VPC module creates the S3 bucket automatically, so if it gets deleted, running `terraform apply` again should recreate it and flow logging will resume. The main issue is that you'll lose historical flow log data, which is why I noted in my improvement plan that I should switch to S3 with proper versioning and lifecycle policies. For any future S3 buckets holding critical data, I'd definitely want to enable versioning and cross-region replication before this becomes a real problem.

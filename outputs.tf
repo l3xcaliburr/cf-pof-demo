@@ -71,3 +71,27 @@ output "alb_sg_id" {
   description = "ID of the ALB security group"
   value       = aws_security_group.alb_sg.id
 }
+
+# WAF Information
+output "waf_web_acl_id" {
+  description = "ID of the WAF Web ACL protecting the ALB"
+  value       = aws_wafv2_web_acl.alb_protection.id
+}
+
+output "waf_web_acl_arn" {
+  description = "ARN of the WAF Web ACL for monitoring"
+  value       = aws_wafv2_web_acl.alb_protection.arn
+}
+
+# Monitoring Information
+output "sns_topic_arn" {
+  description = "ARN of the SNS topic for management server alerts"
+  value       = aws_sns_topic.management_alerts.arn
+}
+
+output "cloudwatch_alarms" {
+  description = "CloudWatch alarm names for management server monitoring"
+  value = {
+    instance_stopped = aws_cloudwatch_metric_alarm.management_instance_stopped[*].alarm_name
+  }
+}

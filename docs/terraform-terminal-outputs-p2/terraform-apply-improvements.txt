@@ -1,0 +1,698 @@
+random_string.bucket_suffix: Refreshing state... [id=gxgq8yzo]
+module.vpc.module.vpc_endpoints.data.aws_region.current: Reading...
+module.management_server.data.aws_ec2_instance_type.this: Reading...
+module.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Reading...
+data.aws_ami.amazon_linux: Reading...
+module.vpc.aws_vpc.this: Refreshing state... [id=vpc-04c19a2782dccc11a]
+module.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Reading...
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Reading...
+module.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Read complete after 0s [id=2053943846]
+module.vpc.aws_eip.nat[0]: Refreshing state... [id=eipalloc-08babf843c156d9c5]
+module.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Read complete after 0s [id=1021377347]
+module.vpc.data.aws_region.current: Reading...
+module.vpc.module.vpc_endpoints.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.vpc.aws_iam_policy.flowlogs_policy[0]: Refreshing state... [id=arn:aws:iam::867344447298:policy/poc-vpc-flowlogs-cloudwatch-policy]
+module.vpc.aws_iam_role.flowlogs_role[0]: Refreshing state... [id=poc-vpc-flowlogs-cloudwatch-role]
+module.management_server.data.aws_ec2_instance_type.this: Read complete after 1s [id=t2.micro]
+module.vpc.aws_iam_role_policy_attachment.flowlogs_policy[0]: Refreshing state... [id=poc-vpc-flowlogs-cloudwatch-role-20250712160525441900000001]
+data.aws_ami.amazon_linux: Read complete after 1s [id=ami-0c6ebb5b9bce4ba15]
+module.vpc.aws_default_security_group.default: Refreshing state... [id=sg-020d9ed55ec16df28]
+module.app_sg.aws_security_group.this: Refreshing state... [id=sg-099dc1ffb83150e35]
+module.vpc.aws_cloudwatch_log_group.this[0]: Refreshing state... [id=/aws/vpcflow/vpc-04c19a2782dccc11a]
+aws_security_group.alb_sg: Refreshing state... [id=sg-09dd4e833b78785f8]
+module.management_sg.aws_security_group.this: Refreshing state... [id=sg-088a6fe298a8b7d9f]
+module.vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-08dba6f75cb91311a]
+aws_lb_target_group.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:targetgroup/app-servers-tg/8ded8b986ab2b79f]
+module.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-07c06fd4b709b4235]
+module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-06c519e779516753b]
+module.vpc.aws_subnet.private[3]: Refreshing state... [id=subnet-09451c02950139cb2]
+module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-02e5d5f481324297c]
+module.vpc.aws_subnet.private[2]: Refreshing state... [id=subnet-0347ba54ebe33409d]
+module.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-0e825194dc69df510]
+module.vpc.aws_route_table.public[1]: Refreshing state... [id=rtb-0d714a3088f046d79]
+module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-0db6965350ba57c34]
+module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-0107c628a7593510b]
+module.app_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-023ff6a6e18fead70]
+module.management_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-0a3cca5608184c3ae]
+module.management_sg.aws_vpc_security_group_ingress_rule.this["ssh"]: Refreshing state... [id=sgr-04bf44737f997f827]
+aws_launch_template.app: Refreshing state... [id=lt-0607e1992879c1b67]
+module.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-0e825194dc69df5101080289494]
+module.vpc.aws_route.public_internet_gateway[1]: Refreshing state... [id=r-rtb-0d714a3088f046d791080289494]
+module.app_sg.aws_vpc_security_group_ingress_rule.this["ssh_from_mgmt"]: Refreshing state... [id=sgr-07f46023f58f4770b]
+module.app_sg.aws_vpc_security_group_ingress_rule.this["http_from_alb"]: Refreshing state... [id=sgr-06285a6d060353a5e]
+module.vpc.aws_flow_log.this[0]: Refreshing state... [id=fl-0f1ea5dbe7a7a0086]
+module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0de347e33f80fddea]
+module.vpc.aws_route_table_association.private[3]: Refreshing state... [id=rtbassoc-05c9b7d02f505c9f7]
+module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0ac8c64529c6fbfdf]
+module.vpc.aws_route_table_association.private[2]: Refreshing state... [id=rtbassoc-05f072d4a51dc4c30]
+module.vpc.aws_nat_gateway.this[0]: Refreshing state... [id=nat-0d9aa88bb5ec0d3dd]
+module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-035f885b8cf8b21a8]
+module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0e6d3f0b5ccd0290b]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/f6edc2cb8c7b10be]
+module.management_server.aws_instance.this[1]: Refreshing state... [id=i-0bdf0d76044c50571]
+module.management_server.aws_instance.this[0]: Refreshing state... [id=i-0ee722646b3554d3e]
+aws_autoscaling_group.app: Refreshing state... [id=app-servers-asg]
+module.vpc.aws_route.private_nat_gateway[0]: Refreshing state... [id=r-rtb-08dba6f75cb91311a1080289494]
+module.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Read complete after 2s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
+aws_lb_listener.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:listener/app/poc-alb/f6edc2cb8c7b10be/2341b176f4230f9d]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_cloudwatch_metric_alarm.management_cpu_high[0] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_cpu_high" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors ec2 cpu utilization for management server 1"
+      + alarm_name                            = "poc-management-server-1-cpu-high"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0ee722646b3554d3e"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 2
+      + id                                    = (known after apply)
+      + metric_name                           = "CPUUtilization"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 300
+      + statistic                             = "Average"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-cpu-high"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-cpu-high"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 80
+      + treat_missing_data                    = "missing"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_cpu_high[1] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_cpu_high" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors ec2 cpu utilization for management server 2"
+      + alarm_name                            = "poc-management-server-2-cpu-high"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0bdf0d76044c50571"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 2
+      + id                                    = (known after apply)
+      + metric_name                           = "CPUUtilization"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 300
+      + statistic                             = "Average"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-cpu-high"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-cpu-high"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 80
+      + treat_missing_data                    = "missing"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_instance_status[0] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_instance_status" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors ec2 instance status check for management server 1"
+      + alarm_name                            = "poc-management-server-1-instance-status"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0ee722646b3554d3e"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 2
+      + id                                    = (known after apply)
+      + metric_name                           = "StatusCheckFailed_Instance"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 60
+      + statistic                             = "Maximum"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-instance-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-instance-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 0
+      + treat_missing_data                    = "missing"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_instance_status[1] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_instance_status" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors ec2 instance status check for management server 2"
+      + alarm_name                            = "poc-management-server-2-instance-status"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0bdf0d76044c50571"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 2
+      + id                                    = (known after apply)
+      + metric_name                           = "StatusCheckFailed_Instance"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 60
+      + statistic                             = "Maximum"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-instance-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-instance-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 0
+      + treat_missing_data                    = "missing"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_network_in[0] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_network_in" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors network connectivity for management server 1"
+      + alarm_name                            = "poc-management-server-1-network-in-low"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "LessThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0ee722646b3554d3e"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 3
+      + id                                    = (known after apply)
+      + metric_name                           = "NetworkIn"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 300
+      + statistic                             = "Sum"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-network-in-low"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-network-in-low"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 1000
+      + treat_missing_data                    = "breaching"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_network_in[1] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_network_in" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors network connectivity for management server 2"
+      + alarm_name                            = "poc-management-server-2-network-in-low"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "LessThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0bdf0d76044c50571"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 3
+      + id                                    = (known after apply)
+      + metric_name                           = "NetworkIn"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 300
+      + statistic                             = "Sum"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-network-in-low"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-network-in-low"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 1000
+      + treat_missing_data                    = "breaching"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_system_status[0] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_system_status" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors ec2 system status check for management server 1"
+      + alarm_name                            = "poc-management-server-1-system-status"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0ee722646b3554d3e"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 2
+      + id                                    = (known after apply)
+      + metric_name                           = "StatusCheckFailed_System"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 60
+      + statistic                             = "Maximum"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-system-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-1-system-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 0
+      + treat_missing_data                    = "missing"
+    }
+
+  # aws_cloudwatch_metric_alarm.management_system_status[1] will be created
+  + resource "aws_cloudwatch_metric_alarm" "management_system_status" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "This metric monitors ec2 system status check for management server 2"
+      + alarm_name                            = "poc-management-server-2-system-status"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = {
+          + "InstanceId" = "i-0bdf0d76044c50571"
+        }
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 2
+      + id                                    = (known after apply)
+      + metric_name                           = "StatusCheckFailed_System"
+      + namespace                             = "AWS/EC2"
+      + ok_actions                            = (known after apply)
+      + period                                = 60
+      + statistic                             = "Maximum"
+      + tags                                  = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-system-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                              = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-server-2-system-status"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + threshold                             = 0
+      + treat_missing_data                    = "missing"
+    }
+
+  # aws_security_group.alb_sg will be updated in-place
+  ~ resource "aws_security_group" "alb_sg" {
+        id                     = "sg-09dd4e833b78785f8"
+      ~ ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTPS from internet"
+              - from_port        = 443
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 443
+            },
+            # (1 unchanged element hidden)
+        ]
+        name                   = "alb-sg"
+        tags                   = {
+            "Environment" = "poc"
+            "ManagedBy"   = "terraform"
+            "Name"        = "alb-sg"
+            "Owner"       = "alex-brooks"
+            "Project"     = "web-server-poc"
+            "Purpose"     = "load-balancer"
+        }
+        # (8 unchanged attributes hidden)
+    }
+
+  # aws_sns_topic.management_alerts will be created
+  + resource "aws_sns_topic" "management_alerts" {
+      + arn                         = (known after apply)
+      + beginning_archive_time      = (known after apply)
+      + content_based_deduplication = false
+      + fifo_throughput_scope       = (known after apply)
+      + fifo_topic                  = false
+      + id                          = (known after apply)
+      + name                        = "poc-management-server-alerts"
+      + name_prefix                 = (known after apply)
+      + owner                       = (known after apply)
+      + policy                      = (known after apply)
+      + signature_version           = (known after apply)
+      + tags                        = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-alerts"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tags_all                    = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-management-alerts"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "monitoring"
+        }
+      + tracing_config              = (known after apply)
+    }
+
+  # aws_sns_topic_subscription.email_alerts[0] will be created
+  + resource "aws_sns_topic_subscription" "email_alerts" {
+      + arn                             = (known after apply)
+      + confirmation_timeout_in_minutes = 1
+      + confirmation_was_authenticated  = (known after apply)
+      + endpoint                        = "alex@rotordev.com"
+      + endpoint_auto_confirms          = false
+      + filter_policy_scope             = (known after apply)
+      + id                              = (known after apply)
+      + owner_id                        = (known after apply)
+      + pending_confirmation            = (known after apply)
+      + protocol                        = "email"
+      + raw_message_delivery            = false
+      + topic_arn                       = (known after apply)
+    }
+
+  # aws_wafv2_web_acl.alb_protection will be created
+  + resource "aws_wafv2_web_acl" "alb_protection" {
+      + application_integration_url = (known after apply)
+      + arn                         = (known after apply)
+      + capacity                    = (known after apply)
+      + description                 = "WAF protection for POC Application Load Balancer"
+      + id                          = (known after apply)
+      + lock_token                  = (known after apply)
+      + name                        = "poc-alb-waf"
+      + name_prefix                 = (known after apply)
+      + scope                       = "REGIONAL"
+      + tags                        = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-alb-waf"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "web-protection"
+        }
+      + tags_all                    = {
+          + "Environment" = "poc"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "poc-alb-waf"
+          + "Owner"       = "alex-brooks"
+          + "Project"     = "web-server-poc"
+          + "Purpose"     = "web-protection"
+        }
+
+      + default_action {
+          + allow {
+            }
+        }
+
+      + rule {
+          + name     = "poc-rate-limit-rule"
+          + priority = 3
+
+          + action {
+              + block {
+                }
+            }
+
+          + statement {
+              + rate_based_statement {
+                  + aggregate_key_type    = "IP"
+                  + evaluation_window_sec = 300
+                  + limit                 = 2000
+                }
+            }
+
+          + visibility_config {
+              + cloudwatch_metrics_enabled = true
+              + metric_name                = "poc-rate-limit-metric"
+              + sampled_requests_enabled   = true
+            }
+        }
+      + rule {
+          + name     = "poc-bad-inputs-rules"
+          + priority = 2
+
+          + override_action {
+              + count {}
+            }
+
+          + statement {
+              + managed_rule_group_statement {
+                  + name        = "AWSManagedRulesKnownBadInputsRuleSet"
+                  + vendor_name = "AWS"
+                    # (1 unchanged attribute hidden)
+                }
+            }
+
+          + visibility_config {
+              + cloudwatch_metrics_enabled = true
+              + metric_name                = "poc-bad-inputs-metric"
+              + sampled_requests_enabled   = true
+            }
+        }
+      + rule {
+          + name     = "poc-common-rules"
+          + priority = 1
+
+          + override_action {
+              + count {}
+            }
+
+          + statement {
+              + managed_rule_group_statement {
+                  + name        = "AWSManagedRulesCommonRuleSet"
+                  + vendor_name = "AWS"
+                    # (1 unchanged attribute hidden)
+
+                  + rule_action_override {
+                      + name = "SizeRestrictions_QUERYSTRING"
+
+                      + action_to_use {
+                          + count {
+                            }
+                        }
+                    }
+                  + rule_action_override {
+                      + name = "NoUserAgent_HEADER"
+
+                      + action_to_use {
+                          + count {
+                            }
+                        }
+                    }
+
+                  + scope_down_statement {
+                      + geo_match_statement {
+                          + country_codes = [
+                              + "US",
+                              + "CA",
+                            ]
+                        }
+                    }
+                }
+            }
+
+          + visibility_config {
+              + cloudwatch_metrics_enabled = true
+              + metric_name                = "poc-common-rules-metric"
+              + sampled_requests_enabled   = true
+            }
+        }
+
+      + visibility_config {
+          + cloudwatch_metrics_enabled = true
+          + metric_name                = "poc-alb-waf-metric"
+          + sampled_requests_enabled   = true
+        }
+    }
+
+  # aws_wafv2_web_acl_association.alb_waf_association will be created
+  + resource "aws_wafv2_web_acl_association" "alb_waf_association" {
+      + id           = (known after apply)
+      + resource_arn = "arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/f6edc2cb8c7b10be"
+      + web_acl_arn  = (known after apply)
+    }
+
+Plan: 12 to add, 1 to change, 0 to destroy.
+
+Changes to Outputs:
+  + cloudwatch_alarms            = {
+      + cpu_high        = [
+          + "poc-management-server-1-cpu-high",
+          + "poc-management-server-2-cpu-high",
+        ]
+      + instance_status = [
+          + "poc-management-server-1-instance-status",
+          + "poc-management-server-2-instance-status",
+        ]
+      + network_low     = [
+          + "poc-management-server-1-network-in-low",
+          + "poc-management-server-2-network-in-low",
+        ]
+      + system_status   = [
+          + "poc-management-server-1-system-status",
+          + "poc-management-server-2-system-status",
+        ]
+    }
+  + sns_topic_arn                = (known after apply)
+  + waf_web_acl_arn              = (known after apply)
+  + waf_web_acl_id               = (known after apply)
+aws_sns_topic.management_alerts: Creating...
+aws_security_group.alb_sg: Modifying... [id=sg-09dd4e833b78785f8]
+aws_security_group.alb_sg: Modifications complete after 1s [id=sg-09dd4e833b78785f8]
+aws_sns_topic.management_alerts: Creation complete after 1s [id=arn:aws:sns:us-east-1:867344447298:poc-management-server-alerts]
+aws_cloudwatch_metric_alarm.management_system_status[1]: Creating...
+aws_cloudwatch_metric_alarm.management_instance_status[0]: Creating...
+aws_sns_topic_subscription.email_alerts[0]: Creating...
+aws_cloudwatch_metric_alarm.management_cpu_high[1]: Creating...
+aws_cloudwatch_metric_alarm.management_network_in[0]: Creating...
+aws_cloudwatch_metric_alarm.management_network_in[1]: Creating...
+aws_cloudwatch_metric_alarm.management_instance_status[1]: Creating...
+aws_cloudwatch_metric_alarm.management_system_status[0]: Creating...
+aws_cloudwatch_metric_alarm.management_cpu_high[0]: Creating...
+aws_wafv2_web_acl.alb_protection: Creating...
+aws_sns_topic_subscription.email_alerts[0]: Creation complete after 0s [id=arn:aws:sns:us-east-1:867344447298:poc-management-server-alerts:106e76e3-ea7f-4f0c-a0c7-9b332ea45d84]
+aws_cloudwatch_metric_alarm.management_system_status[1]: Creation complete after 0s [id=poc-management-server-2-system-status]
+aws_cloudwatch_metric_alarm.management_instance_status[1]: Creation complete after 0s [id=poc-management-server-2-instance-status]
+aws_cloudwatch_metric_alarm.management_system_status[0]: Creation complete after 0s [id=poc-management-server-1-system-status]
+aws_cloudwatch_metric_alarm.management_cpu_high[0]: Creation complete after 0s [id=poc-management-server-1-cpu-high]
+aws_cloudwatch_metric_alarm.management_network_in[1]: Creation complete after 0s [id=poc-management-server-2-network-in-low]
+aws_cloudwatch_metric_alarm.management_network_in[0]: Creation complete after 0s [id=poc-management-server-1-network-in-low]
+aws_cloudwatch_metric_alarm.management_instance_status[0]: Creation complete after 0s [id=poc-management-server-1-instance-status]
+aws_cloudwatch_metric_alarm.management_cpu_high[1]: Creation complete after 0s [id=poc-management-server-2-cpu-high]
+aws_wafv2_web_acl.alb_protection: Creation complete after 1s [id=fdf39f85-c036-4588-b728-3fbe4b25479e]
+aws_wafv2_web_acl_association.alb_waf_association: Creating...
+aws_wafv2_web_acl_association.alb_waf_association: Still creating... [00m10s elapsed]
+aws_wafv2_web_acl_association.alb_waf_association: Still creating... [00m20s elapsed]
+aws_wafv2_web_acl_association.alb_waf_association: Still creating... [00m30s elapsed]
+aws_wafv2_web_acl_association.alb_waf_association: Creation complete after 34s [id=arn:aws:wafv2:us-east-1:867344447298:regional/webacl/poc-alb-waf/fdf39f85-c036-4588-b728-3fbe4b25479e,arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/f6edc2cb8c7b10be]
+
+Apply complete! Resources: 12 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+alb_sg_id = "sg-09dd4e833b78785f8"
+alb_subnet_id = "subnet-0107c628a7593510b"
+app_sg_id = "sg-099dc1ffb83150e35"
+asg_name = "app-servers-asg"
+cloudwatch_alarms = {
+  "cpu_high" = [
+    "poc-management-server-1-cpu-high",
+    "poc-management-server-2-cpu-high",
+  ]
+  "instance_status" = [
+    "poc-management-server-1-instance-status",
+    "poc-management-server-2-instance-status",
+  ]
+  "network_low" = [
+    "poc-management-server-1-network-in-low",
+    "poc-management-server-2-network-in-low",
+  ]
+  "system_status" = [
+    "poc-management-server-1-system-status",
+    "poc-management-server-2-system-status",
+  ]
+}
+load_balancer_dns = "poc-alb-722414802.us-east-1.elb.amazonaws.com"
+load_balancer_url = "http://poc-alb-722414802.us-east-1.elb.amazonaws.com"
+management_server_ip = "i-0ee722646b3554d3e"
+management_server_private_ip = "10.1.1.50"
+management_sg_id = "sg-088a6fe298a8b7d9f"
+management_subnet_id = "subnet-0db6965350ba57c34"
+private_subnet_ids = {
+  "poc-vpc-app-subnet-us-east-1a" = "subnet-02e5d5f481324297c"
+  "poc-vpc-app-subnet-us-east-1b" = "subnet-06c519e779516753b"
+  "poc-vpc-backend-subnet-us-east-1a" = "subnet-0347ba54ebe33409d"
+  "poc-vpc-backend-subnet-us-east-1b" = "subnet-09451c02950139cb2"
+}
+public_subnet_ids = {
+  "poc-vpc-management-subnet-us-east-1a" = "subnet-0db6965350ba57c34"
+  "poc-vpc-management-subnet-us-east-1b" = "subnet-0107c628a7593510b"
+}
+sns_topic_arn = "arn:aws:sns:us-east-1:867344447298:poc-management-server-alerts"
+vpc_id = "vpc-04c19a2782dccc11a"
+waf_web_acl_arn = "arn:aws:wafv2:us-east-1:867344447298:regional/webacl/poc-alb-waf/fdf39f85-c036-4588-b728-3fbe4b25479e"
+waf_web_acl_id = "fdf39f85-c036-4588-b728-3fbe4b25479e"
