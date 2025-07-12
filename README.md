@@ -52,7 +52,6 @@ cf-poc-demo/
 ├── README.md                  # Project documentation and usage
 └── docs/
     ├── architecture.png       # Infrastructure design documentation
-    ├── deployment.md          # Step-by-step deployment guide
     ├── screenshots/           # Visual documentation and verification
     └── terraform-terminal-outputs/  # Complete terraform execution logs
 ```
