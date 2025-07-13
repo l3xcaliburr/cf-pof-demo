@@ -56,6 +56,11 @@ output "asg_name" {
   value       = aws_autoscaling_group.app.name
 }
 
+output "target_group_arn" {
+  description = "ARN of the ALB target group for health checks"
+  value       = aws_lb_target_group.app.arn
+}
+
 # Security Groups
 output "management_sg_id" {
   description = "ID of the management security group"

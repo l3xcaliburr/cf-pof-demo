@@ -285,16 +285,322 @@ Added comprehensive WAF protection to my ALB with AWS managed rule sets for OWAS
 
 Set up complete health monitoring for my management servers with CloudWatch alarms that track instance status, system status, CPU utilization, and network connectivity. All alarms send notifications to my dev email via SNS so I'll know immediately when something goes wrong. The monitoring covers both management servers individually and sends recovery notifications when issues are resolved. This gives me proper visibility into the health of my critical infrastructure access points.
 
-## Runbook-style Notes
+## Operational Runbooks
 
-### How to Deploy This Environment
+### RUNBOOK: Environment Deployment
 
-If someone else needs to deploy this infrastructure, they should start by cloning this repository and making sure they have AWS CLI configured with proper permissions. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and update it with your actual IP address, key pair name, email for notifications, and preferred tags. Don't skip the `terraform plan` step because it'll show you exactly what's getting created and catch any configuration issues early. The deployment usually takes about 5-10 minutes, and you'll know it worked when you can access the load balancer URL and see the Apache test page.
+**Purpose:** Deploy the complete POC infrastructure from scratch  
+**Prerequisites:** AWS CLI configured, Terraform installed, EC2 key pair created  
+**Estimated Time:** 15-20 minutes  
+**Risk Level:** Low (new deployment)
 
-### Responding to EC2 Instance Outages
+#### Pre-Deployment Checklist
 
-If an app server in the ASG goes down, the Auto Scaling Group should automatically replace it within a few minutes, so the first thing to do is wait and see if it self-heals. If the management server fails, you'll need to manually replace it since there's no auto-scaling configured for those instances. For any EC2 outage, check the CloudWatch console for system logs and status checks to understand what failed. If an instance is completely unresponsive, the fastest fix is usually to terminate it and let the ASG spin up a replacement rather than trying to troubleshoot a broken instance.
+- [ ] AWS CLI configured with appropriate permissions
+- [ ] Terraform >= 1.0 installed
+- [ ] EC2 key pair exists in target region
+- [ ] Current public IP address known
 
-### Restoring Data from Deleted S3 Buckets
+#### Step-by-Step Procedure
 
-The Coalfire VPC module creates the S3 bucket automatically, so if it gets deleted, running `terraform apply` again should recreate it and flow logging will resume. The main issue is that you'll lose historical flow log data, which is why I noted in my improvement plan that I should switch to S3 with proper versioning and lifecycle policies. For any future S3 buckets holding critical data, I'd definitely want to enable versioning and cross-region replication before this becomes a real problem.
+1. **Clone and Setup Repository**
+
+   ```bash
+   git clone <repository-url>
+   cd cf-poc-demo
+   cp terraform.tfvars.example terraform.tfvars
+   ```
+
+2. **Configure Variables**
+
+   ```bash
+   # Edit terraform.tfvars with required values
+   vim terraform.tfvars
+   ```
+
+   **Required Updates:**
+
+   - `vpc_cidr` - Your desired VPC CIDR
+   - `public_subnet_cidrs` - Management subnet CIDRs
+   - `private_subnet_cidrs` - Application/backend subnet CIDRs
+   - `my_ip` - Your public IP in CIDR format (get with `curl -s https://checkip.amazonaws.com`)
+   - `key_pair_name` - Your EC2 key pair name
+   - `notification_email` - Email for alerts
+
+3. **Initialize and Validate**
+
+   ```bash
+   terraform init
+   terraform validate
+   terraform plan -var-file=terraform.tfvars
+   ```
+
+   **Expected Output:** ~40 resources to be created
+
+4. **Deploy Infrastructure**
+
+   ```bash
+   terraform apply -var-file=terraform.tfvars
+   ```
+
+   **Wait for:** "Apply complete!" message
+
+5. **Verify Deployment**
+
+   ```bash
+   # Get outputs
+   terraform output
+
+   # Test ALB endpoint
+   curl -I $(terraform output -raw load_balancer_url)
+
+   # Expected: HTTP 200 response
+   ```
+
+6. **Post-Deployment Validation**
+   - [ ] ALB returns HTTP 200
+   - [ ] Management servers accessible via SSH
+   - [ ] CloudWatch alarms created
+   - [ ] WAF rules active
+
+#### Rollback Procedure
+
+```bash
+terraform destroy -var-file=terraform.tfvars
+```
+
+---
+
+### RUNBOOK: EC2 Instance Outage Response
+
+**Purpose:** Respond to EC2 instance failures and restore service  
+**Trigger:** CloudWatch alarms, monitoring alerts, or user reports  
+**Estimated Time:** 5-15 minutes  
+**Risk Level:** Medium (service impact)
+
+#### Immediate Assessment (2 minutes)
+
+1. **Identify Affected Instance Type**
+
+   ```bash
+   # Check ASG instances
+   aws autoscaling describe-auto-scaling-groups \
+     --auto-scaling-group-names app-servers-asg \
+     --query 'AutoScalingGroups[0].Instances[*].[InstanceId,AvailabilityZone,HealthStatus]'
+
+   # Check management servers
+   aws ec2 describe-instances \
+     --filters "Name=tag:Name,Values=management-server*" \
+     --query 'Reservations[*].Instances[*].[InstanceId,State.Name,Placement.AvailabilityZone]'
+   ```
+
+2. **Check ALB Health**
+   ```bash
+   aws elbv2 describe-target-health \
+     --target-group-arn $(terraform output -raw target_group_arn)
+   ```
+
+#### Application Server Outage
+
+**If ASG instance is unhealthy:**
+
+1. **Wait for Auto-Recovery (5 minutes)**
+
+   - ASG should automatically replace unhealthy instances
+   - Monitor target group health
+
+2. **Force Instance Replacement (if needed)**
+
+   ```bash
+   # Terminate unhealthy instance
+   aws ec2 terminate-instances --instance-ids <INSTANCE_ID>
+
+   # ASG will launch replacement automatically
+   ```
+
+3. **Verify Recovery**
+   ```bash
+   # Check new instance health
+   aws elbv2 describe-target-health \
+     --target-group-arn $(terraform output -raw target_group_arn)
+   ```
+
+#### Management Server Outage
+
+**If management server is unresponsive:**
+
+1. **Check Instance Status**
+
+   ```bash
+   aws ec2 describe-instance-status --instance-ids <INSTANCE_ID>
+   ```
+
+2. **Attempt Restart**
+
+   ```bash
+   aws ec2 reboot-instances --instance-ids <INSTANCE_ID>
+   ```
+
+3. **Replace if Restart Fails**
+
+   ```bash
+   # Terminate failed instance
+   aws ec2 terminate-instances --instance-ids <INSTANCE_ID>
+
+   # Deploy replacement
+   terraform apply -var-file=terraform.tfvars -target=module.management_server
+   ```
+
+#### Escalation Criteria
+
+- Multiple instances failing simultaneously
+- ASG not replacing instances after 10 minutes
+- Infrastructure-wide connectivity issues
+
+---
+
+### RUNBOOK: S3 Bucket Recovery
+
+**Purpose:** Restore S3 buckets and data after accidental deletion  
+**Trigger:** Terraform state bucket or VPC flow logs bucket deleted  
+**Estimated Time:** 10-30 minutes  
+**Risk Level:** High (potential data loss)
+
+#### Immediate Response (5 minutes)
+
+1. **Assess Scope of Deletion**
+
+   ```bash
+   # Check if Terraform state bucket exists
+   aws s3 ls s3://cf-poc-terraform-state-b91fxp3k/
+
+   # Check VPC flow logs bucket
+   aws s3 ls | grep flowlogs
+   ```
+
+2. **Check for Versioned Backups**
+   ```bash
+   # If bucket still exists but objects deleted
+   aws s3api list-object-versions --bucket cf-poc-terraform-state-b91fxp3k
+   ```
+
+#### Terraform State Bucket Recovery
+
+**If state bucket is completely deleted:**
+
+1. **Recreate State Bucket**
+
+   ```bash
+   # Create bucket
+   aws s3 mb s3://cf-poc-terraform-state-b91fxp3k
+
+   # Enable versioning
+   aws s3api put-bucket-versioning \
+     --bucket cf-poc-terraform-state-b91fxp3k \
+     --versioning-configuration Status=Enabled
+
+   # Enable encryption
+   aws s3api put-bucket-encryption \
+     --bucket cf-poc-terraform-state-b91fxp3k \
+     --server-side-encryption-configuration \
+     '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'
+   ```
+
+2. **Import Existing Infrastructure**
+
+   ```bash
+   # Initialize with new backend
+   terraform init
+
+   # Import critical resources (example for VPC)
+   terraform import module.vpc.aws_vpc.this <VPC_ID>
+
+   # Continue importing other resources as needed
+   ```
+
+3. **Refresh State**
+   ```bash
+   terraform refresh -var-file=terraform.tfvars
+   ```
+
+#### VPC Flow Logs Bucket Recovery
+
+**If flow logs bucket is deleted:**
+
+1. **Allow Terraform to Recreate**
+
+   ```bash
+   terraform apply -var-file=terraform.tfvars
+   ```
+
+   **Note:** Historical flow log data will be lost
+
+2. **Verify Flow Logging Resumed**
+   ```bash
+   aws logs describe-log-groups --log-group-name-prefix "/aws/vpcflow"
+   ```
+
+#### Data Recovery from Versioned Objects
+
+**If objects exist but are deleted:**
+
+1. **List Deleted Objects**
+
+   ```bash
+   aws s3api list-object-versions \
+     --bucket cf-poc-terraform-state-b91fxp3k \
+     --prefix terraform.tfstate
+   ```
+
+2. **Restore Latest Version**
+   ```bash
+   aws s3api restore-object \
+     --bucket cf-poc-terraform-state-b91fxp3k \
+     --key terraform.tfstate \
+     --version-id <VERSION_ID>
+   ```
+
+#### Prevention Measures
+
+- Enable MFA delete on critical buckets
+- Implement bucket policies preventing deletion
+- Regular state file backups to secondary location
+- Cross-region replication for critical data
+
+---
+
+### RUNBOOK: Safe Infrastructure Refactoring
+
+**Purpose:** Make code changes without impacting running infrastructure  
+**Risk Level:** Medium (potential service disruption if done incorrectly)
+
+#### Pre-Change Validation
+
+```bash
+# Capture current state
+terraform plan -var-file=terraform.tfvars > pre-change-plan.txt
+
+# Ensure no pending changes
+grep "No changes" pre-change-plan.txt || exit 1
+```
+
+#### Post-Change Validation
+
+```bash
+# Validate configuration
+terraform validate
+
+# Check for infrastructure drift
+terraform plan -var-file=terraform.tfvars > post-change-plan.txt
+
+# Verify no changes detected
+grep "No changes" post-change-plan.txt || echo "WARNING: Infrastructure changes detected"
+```
+
+#### Emergency Rollback
+
+```bash
+# Revert to last known good configuration
+git revert <COMMIT_HASH>
+terraform plan -var-file=terraform.tfvars
+```
