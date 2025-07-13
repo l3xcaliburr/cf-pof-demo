@@ -30,7 +30,7 @@ module "management_server" {
   ami               = data.aws_ami.amazon_linux.id
   ec2_instance_type = "t2.micro"
   ec2_key_pair      = var.key_pair_name
-  subnet_ids        = [values(module.vpc.public_subnets)[0]]
+  subnet_ids        = values(module.vpc.public_subnets)
   vpc_id            = module.vpc.vpc_id
   root_volume_size  = 10
   ebs_kms_key_arn   = null
