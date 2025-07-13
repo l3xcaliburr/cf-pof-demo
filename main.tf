@@ -7,14 +7,13 @@ module "vpc" {
   source = "github.com/Coalfire-CF/terraform-aws-vpc-nfw"
 
   name = "poc-vpc"
-  cidr = "10.1.0.0/16"                                # As required by the POC
+  cidr = var.vpc_cidr                                 # VPC CIDR from variables
   azs  = ["${var.aws_region}a", "${var.aws_region}b"] # us-east-1a and us-east-1b
 
   # Six subnets across two AZs (3 types × 2 AZs each)
-  # AZ-a: Management(10.1.1.0/24), Application(10.1.2.0/24), Backend(10.1.3.0/24)
-  # AZ-b: Management(10.1.4.0/24), Application(10.1.5.0/24), Backend(10.1.6.0/24)
-  public_subnets  = ["10.1.1.0/24", "10.1.4.0/24"]                               # Management subnets (internet accessible)
-  private_subnets = ["10.1.2.0/24", "10.1.5.0/24", "10.1.3.0/24", "10.1.6.0/24"] # Application and Backend subnets
+  # Subnet assignments defined in terraform.tfvars for security
+  public_subnets  = var.public_subnet_cidrs  # Management subnets (internet accessible)
+  private_subnets = var.private_subnet_cidrs # Application and Backend subnets
 
   # Enable internet connectivity
   enable_nat_gateway = true # Allows private subnets to access the internet
@@ -28,10 +27,10 @@ module "vpc" {
 
 
   private_subnet_tags = [
-    "app-subnet",      # For 10.1.2.0/24 in us-east-1a
-    "app-subnet",      # For 10.1.5.0/24 in us-east-1b  
-    "backend-subnet",  # For 10.1.3.0/24 in us-east-1a
-    "backend-subnet"   # For 10.1.6.0/24 in us-east-1b
+    "app-subnet",      # For application subnet in us-east-1a
+    "app-subnet",      # For application subnet in us-east-1b  
+    "backend-subnet",  # For backend subnet in us-east-1a
+    "backend-subnet"   # For backend subnet in us-east-1b
   ]
 
 

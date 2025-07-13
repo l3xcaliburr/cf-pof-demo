@@ -77,10 +77,15 @@ cp terraform.tfvars.example terraform.tfvars
 
 Then edit `terraform.tfvars` with your actual values. The example file contains all the required variables with comments explaining what each one does. Make sure to update:
 
+- `vpc_cidr`: Your desired VPC CIDR block (default: 10.1.0.0/16)
+- `public_subnet_cidrs`: CIDR blocks for public subnets (management subnets)
+- `private_subnet_cidrs`: CIDR blocks for private subnets (application and backend subnets)
 - `my_ip`: Your actual public IP address (get it with `curl -s https://checkip.amazonaws.com`)
 - `key_pair_name`: Your existing EC2 key pair name
 - `notification_email`: Your email address for CloudWatch alerts (optional)
 - `common_tags`: Update with your preferred tags
+
+**Security Note**: The `terraform.tfvars` file contains sensitive network configuration and should never be committed to version control. It's already excluded in the `.gitignore` file.
 
 #### 2. Initialize and Plan
 
@@ -196,6 +201,12 @@ Since we are spreading 3 subnets across 2 azs, I decided to deploy a second mana
 ### Scripting the installation of Apache on the App Servers
 
 I decided the easiest approach to satisfy this requirement was to create a user data script locally and reference it in the Auto Scaling Group launch template. Terraform will read the script file, base64 encode it, and embed it into the launch template's user data field. When new instances launch, the ASG will automatically execute this script during the EC2 instance initialization process, ensuring Apache is installed and configured on each server at boot time.
+
+### Network Security Configuration Decision
+
+After careful review of my project, I decided that moving the VPC and subnet CIDR blocks to variables was the best security practice. I initially exposed them directly in the configuration files because I was moving too quickly for this POC, but then I thought better of it. Even though this is just a demonstration environment, hardcoding network topology in version control creates unnecessary security exposure. I moved all the CIDR blocks to `terraform.tfvars` (which is excluded from git) and used completely different arbitrary values in the example file. This way, anyone who forks or reviews this repository won't accidentally learn the actual network layout I used for testing.
+
+I'm aware that the earlier git commits still retain the CIDR ranges in the repository history, which is a good reminder that git never truly "forgets" sensitive information once it's committed. In a real-world scenario where this happened with production networks, I would need to rotate those CIDR ranges and potentially even create a fresh repository to ensure the network topology remains secure.
 
 ## References to Resources Used
 
