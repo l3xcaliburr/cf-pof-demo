@@ -63,10 +63,12 @@ cf-poc-demo/
 
 ### Prerequisites
 
-- AWS CLI configured with credentials that have permission to create VPCs, EC2 instances, and load balancers
+- AWS CLI configured with credentials that have permission to create VPCs, EC2 instances, load balancers, and S3 buckets
 - Terraform installed (I used version 1.12.2)
 - An EC2 key pair already created in your AWS account. (Needed for SSH access)
 - Your current public IP address to allow SSH access to the management server
+
+**Note:** This project uses S3 for Terraform state storage. The backend configuration in `providers.tf` specifies the S3 bucket `cf-poc-terraform-state-b91fxp3k`. If you're deploying this yourself, you'll need to create your own S3 bucket and update the backend configuration accordingly.
 
 ### Step-by-Step Deployment
 
@@ -212,6 +214,10 @@ I decided the easiest approach to satisfy this requirement was to create a user 
 After careful review of my project, I decided that moving the VPC and subnet CIDR blocks to variables was the best security practice. I initially exposed them directly in the configuration files because I was moving too quickly for this POC, but then I thought better of it. Even though this is just a demonstration environment, hardcoding network topology in version control creates unnecessary security exposure. I moved all the CIDR blocks to `terraform.tfvars` (which is excluded from git) and used completely different arbitrary values in the example file. This way, anyone who forks or reviews this repository won't accidentally learn the actual network layout I used for testing.
 
 I'm aware that the earlier git commits still retain the CIDR ranges in the repository history, which is a good reminder that git never truly "forgets" sensitive information once it's committed. In a real-world scenario where this happened with production networks, I would need to rotate those CIDR ranges and potentially even create a fresh repository to ensure the network topology remains secure.
+
+### Backend Migration to S3
+
+As the final step of this POC, I migrated the Terraform state from local storage to S3 to prepare for potential collaboration. I used the local backend initially since I was the only one working on the project. I created an S3 bucket with versioning enabled and server-side encryption for security. The migration was seamless - `terraform init -migrate-state` successfully moved the existing state to S3, and subsequent `terraform plan` confirmed no infrastructure changes were needed.
 
 ## References to Resources Used
 
