@@ -36,11 +36,14 @@ Overall, the project seems fairly straight forward. I will create and deploy the
 
 • One ALB that sends web traffic to the ec2's in the ASG.
 
-### Initial Project Structure
+### Project Structure
 
 ```
 cf-poc-demo/
-├── main.tf                    # Primary infrastructure orchestration
+├── network.tf                 # VPC, subnets, and networking infrastructure
+├── security.tf                # Security groups and WAF configuration
+├── compute.tf                 # EC2 instances, ASG, and load balancer
+├── monitoring.tf              # CloudWatch alarms and SNS notifications
 ├── variables.tf               # Project input variables and configuration
 ├── outputs.tf                 # Key infrastructure values for reference
 ├── providers.tf               # Lock provider versions for reproducible deployments
@@ -184,7 +187,9 @@ I initially messed up the subnet tagging because I'm still learning how third-pa
 
 ### Infrastructure Organization Approach
 
-For this proof-of-concept, I'm putting all the infrastructure code in one file (main.tf) instead of splitting it across multiple files. Since this is a simple setup with just a VPC, some EC2 instances, and a load balancer, keeping everything in one place makes it easier to build quickly and review during the demo. I'm using Coalfire's modules for the basic stuff (VPC, security groups) and writing the load balancer and auto scaling parts myself, so having it all together shows clearly what's a module versus what's custom code. For a real production system, I'd definitely split this into separate files, but for a POC demonstration this approach keeps things simple and fast.
+I initially put all the infrastructure code in one file (main.tf) to build quickly, but then reorganized it into logical modules to align with best practices. The code is now split into four files: `network.tf` for VPC and networking, `security.tf` for security groups and WAF, `compute.tf` for EC2 instances and load balancing, and `monitoring.tf` for CloudWatch alarms. I'm using Coalfire's modules for the foundational infrastructure (VPC, security groups) and writing the application-specific parts myself.
+
+**Validation of Reorganization:** After completing the refactor, I ran `terraform plan` to ensure the reorganization didn't introduce any unintended changes. The plan showed "No changes. Your infrastructure matches the configuration." which confirms that the modular structure produces exactly the same infrastructure as the original monolithic approach. The complete output is captured in `docs/terraform-terminal-outputs/terraform-plan-after-reorganization.txt` for reference.
 
 ### ALB Security Group Decision
 

@@ -1,0 +1,69 @@
+[0m[1mrandom_string.bucket_suffix: Refreshing state... [id=b91fxp3k][0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Reading...[0m[0m
+[0m[1mmodule.management_server.data.aws_ec2_instance_type.this: Reading...[0m[0m
+[0m[1mmodule.vpc.module.vpc_endpoints.data.aws_region.current: Reading...[0m[0m
+[0m[1mmodule.vpc.data.aws_region.current: Reading...[0m[0m
+[0m[1mmodule.vpc.aws_vpc.this: Refreshing state... [id=vpc-0281b5a14ce9ecd02][0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Reading...[0m[0m
+[0m[1mmodule.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Reading...[0m[0m
+[0m[1mdata.aws_ami.amazon_linux: Reading...[0m[0m
+[0m[1maws_sns_topic.management_alerts: Refreshing state... [id=arn:aws:sns:us-east-1:867344447298:poc-management-server-alerts][0m
+[0m[1mmodule.vpc.module.vpc_endpoints.data.aws_region.current: Read complete after 0s [id=us-east-1][0m
+[0m[1mmodule.vpc.data.aws_region.current: Read complete after 0s [id=us-east-1][0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Read complete after 0s [id=2053943846][0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Read complete after 0s [id=1021377347][0m
+[0m[1mmodule.vpc.aws_eip.nat[0]: Refreshing state... [id=eipalloc-0d51d855b0960f77b][0m
+[0m[1mmodule.vpc.aws_iam_policy.flowlogs_policy[0]: Refreshing state... [id=arn:aws:iam::867344447298:policy/poc-vpc-flowlogs-cloudwatch-policy][0m
+[0m[1mmodule.vpc.aws_iam_role.flowlogs_role[0]: Refreshing state... [id=poc-vpc-flowlogs-cloudwatch-role][0m
+[0m[1mmodule.management_server.data.aws_ec2_instance_type.this: Read complete after 1s [id=t2.micro][0m
+[0m[1maws_sns_topic_subscription.email_alerts[0]: Refreshing state... [id=arn:aws:sns:us-east-1:867344447298:poc-management-server-alerts:44dedfbd-daba-4ec7-9e3b-367411595082][0m
+[0m[1maws_wafv2_web_acl.alb_protection: Refreshing state... [id=7f1301bc-87b4-4fad-8710-d5477901bbef][0m
+[0m[1mmodule.vpc.aws_iam_role_policy_attachment.flowlogs_policy[0]: Refreshing state... [id=poc-vpc-flowlogs-cloudwatch-role-20250713003817778900000001][0m
+[0m[1mdata.aws_ami.amazon_linux: Read complete after 1s [id=ami-0c6ebb5b9bce4ba15][0m
+[0m[1mmodule.vpc.aws_default_security_group.default: Refreshing state... [id=sg-0afb6ee49efe3cdad][0m
+[0m[1maws_lb_target_group.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:targetgroup/app-servers-tg/2702a3c757e27667][0m
+[0m[1mmodule.management_sg.aws_security_group.this: Refreshing state... [id=sg-09403c63660c22da3][0m
+[0m[1maws_security_group.alb_sg: Refreshing state... [id=sg-0ff7a4ecedd58d84b][0m
+[0m[1mmodule.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-011caa235a9346c15][0m
+[0m[1mmodule.vpc.aws_route_table.public[1]: Refreshing state... [id=rtb-0e379150f7b4269cc][0m
+[0m[1mmodule.vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-0583e0066ec9e1d14][0m
+[0m[1mmodule.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-01de031f0054dfcc5][0m
+[0m[1mmodule.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-0b16855189ac5d087][0m
+[0m[1mmodule.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-092d7d070ee0c3d1e][0m
+[0m[1mmodule.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0a4c9bf2743893687][0m
+[0m[1mmodule.vpc.aws_subnet.private[2]: Refreshing state... [id=subnet-0075685bd92352db9][0m
+[0m[1mmodule.vpc.aws_subnet.private[3]: Refreshing state... [id=subnet-00a06ba5054e5a9a1][0m
+[0m[1mmodule.vpc.aws_cloudwatch_log_group.this[0]: Refreshing state... [id=/aws/vpcflow/vpc-0281b5a14ce9ecd02][0m
+[0m[1mmodule.app_sg.aws_security_group.this: Refreshing state... [id=sg-010e7fa79a458cb89][0m
+[0m[1mmodule.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-0234732557da5bdd4][0m
+[0m[1mmodule.management_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-060ef89869fed3c61][0m
+[0m[1mmodule.management_sg.aws_vpc_security_group_ingress_rule.this["ssh"]: Refreshing state... [id=sgr-03048e562b8b2965a][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-082edd86dacaf285b][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0e80064707084488a][0m
+[0m[1maws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/1645a480142ba1b0][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-050f75b6a7491098f][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[2]: Refreshing state... [id=rtbassoc-0cd93981f64728b94][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[3]: Refreshing state... [id=rtbassoc-0528704ea2d9062da][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0a93da839f8b875aa][0m
+[0m[1mmodule.management_server.aws_instance.this[1]: Refreshing state... [id=i-0e830023c18611bfc][0m
+[0m[1mmodule.management_server.aws_instance.this[0]: Refreshing state... [id=i-051829932cc634623][0m
+[0m[1mmodule.app_sg.aws_vpc_security_group_ingress_rule.this["ssh_from_mgmt"]: Refreshing state... [id=sgr-0f55479e341fdfd6d][0m
+[0m[1mmodule.app_sg.aws_vpc_security_group_ingress_rule.this["http_from_alb"]: Refreshing state... [id=sgr-0f10714b83bb7dea3][0m
+[0m[1mmodule.app_sg.aws_vpc_security_group_egress_rule.this["all_outbound"]: Refreshing state... [id=sgr-0124e73895a2f96b8][0m
+[0m[1mmodule.vpc.aws_nat_gateway.this[0]: Refreshing state... [id=nat-067a03dd05baa3eb9][0m
+[0m[1mmodule.vpc.aws_route.public_internet_gateway[1]: Refreshing state... [id=r-rtb-0e379150f7b4269cc1080289494][0m
+[0m[1mmodule.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-011caa235a9346c151080289494][0m
+[0m[1maws_launch_template.app: Refreshing state... [id=lt-044321bac3ffc6890][0m
+[0m[1mmodule.vpc.aws_flow_log.this[0]: Refreshing state... [id=fl-0933aabbfd70f9c3a][0m
+[0m[1mmodule.vpc.aws_route.private_nat_gateway[0]: Refreshing state... [id=r-rtb-0583e0066ec9e1d141080289494][0m
+[0m[1maws_autoscaling_group.app: Refreshing state... [id=app-servers-asg][0m
+[0m[1maws_lb_listener.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:867344447298:listener/app/poc-alb/1645a480142ba1b0/c218635bd65bb4bd][0m
+[0m[1mmodule.management_server.data.aws_iam_policy.AmazonSSMManagedInstanceCore: Read complete after 2s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore][0m
+[0m[1maws_wafv2_web_acl_association.alb_waf_association: Refreshing state... [id=arn:aws:wafv2:us-east-1:867344447298:regional/webacl/poc-alb-waf/7f1301bc-87b4-4fad-8710-d5477901bbef,arn:aws:elasticloadbalancing:us-east-1:867344447298:loadbalancer/app/poc-alb/1645a480142ba1b0][0m
+[0m[1maws_cloudwatch_metric_alarm.management_instance_stopped[1]: Refreshing state... [id=poc-management-server-2-stopped][0m
+[0m[1maws_cloudwatch_metric_alarm.management_instance_stopped[0]: Refreshing state... [id=poc-management-server-1-stopped][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
